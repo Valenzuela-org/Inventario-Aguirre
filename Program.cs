@@ -49,6 +49,29 @@ if(int.TryParse(Console.ReadLine(),out opcion))
             break;
         case 2:
             Console.WriteLine("Opción 2 seleccionada: Actualizar producto existente");
+            string codigoActualizar = Console.ReadLine() ?? "";
+
+    Producto? productoActualizar = productos.Find(
+        p => p.Codigo == codigoActualizar
+    );
+
+    if (productoActualizar != null)
+    {
+        Console.Write("Nuevo nombre: ");
+        productoActualizar.Nombre = Console.ReadLine() ?? "";
+
+        Console.Write("Nuevo color: ");
+        productoActualizar.Color = Console.ReadLine() ?? "";
+
+        Console.Write("Nueva talla: ");
+        productoActualizar.Talla = Console.ReadLine() ?? "";
+
+        Console.WriteLine("Producto actualizado correctamente.");
+    }
+    else
+    {
+        Console.WriteLine("Producto no encontrado.");
+    }
             break;
         case 3:
             Console.WriteLine("Opción 3 seleccionada: Eliminar producto");
