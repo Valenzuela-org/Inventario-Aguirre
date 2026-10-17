@@ -1,4 +1,9 @@
-﻿//Mensaje de bienvenida
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+List<Producto> productos = new List<Producto>();
+//Mensaje de bienvenida
 Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
 
 //Declaración de variables
@@ -50,6 +55,25 @@ if(int.TryParse(Console.ReadLine(),out opcion))
             break;
         case 4:
             Console.WriteLine("Opción 4 seleccionada: Buscar producto existente");
+            string codigoBuscar = Console.ReadLine() ?? "";
+
+    Producto? encontrado = productos.Find(
+        p => p.Codigo == codigoBuscar
+    );
+
+    if (encontrado != null)
+    {
+        Console.WriteLine("\nProducto encontrado:");
+        Console.WriteLine("Código: " + encontrado.Codigo);
+        Console.WriteLine("Nombre: " + encontrado.Nombre);
+        Console.WriteLine("Color: " + encontrado.Color);
+        Console.WriteLine("Talla: " + encontrado.Talla);
+    }
+    else
+    {
+        Console.WriteLine("Producto no encontrado.");
+    }
+
             break;
         case 5:
             Console.WriteLine("Opción 5 seleccionada: Salir");
@@ -91,4 +115,11 @@ while(true)
     {
         Console.WriteLine("Por favor, ingrese un número válido para la cantidad producida.");
     }
+}
+class Producto
+{
+    public string Codigo { get; set; } = "";
+    public string Nombre { get; set; } = "";
+    public string Color { get; set; } = "";
+    public string Talla { get; set; } = "";
 }
