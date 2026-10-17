@@ -1,30 +1,15 @@
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.exe
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.deps.json
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.runtimeconfig.json
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.dll
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.pdb
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.GeneratedMSBuildEditorConfig.editorconfig
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfoInputs.cache
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfo.cs
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.csproj.CoreCompileInputs.cache
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.sourcelink.json
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.dll
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\refint\Inventario-Aguirre.dll
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.pdb
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.genruntimeconfig.cache
-D:\Proyectos\C#\Aguirre\Inventario-Aguirre\obj\Debug\net10.0\ref\Inventario-Aguirre.dll
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfoInputs.cache
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfo.cs
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.csproj.CoreCompileInputs.cache
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.sourcelink.json
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.dll
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\refint\Inventario-Aguirre.dll
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.pdb
-C:\Users\Andy\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.exe
-C:\Users\Andy\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.deps.json
-C:\Users\Andy\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.runtimeconfig.json
-C:\Users\Andy\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.dll
-C:\Users\Andy\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.pdb
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.genruntimeconfig.cache
-C:\Users\Andy\Inventario-Aguirre\obj\Debug\net10.0\ref\Inventario-Aguirre.dll
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.exe
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.deps.json
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.runtimeconfig.json
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.dll
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.pdb
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfoInputs.cache
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfo.cs
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.csproj.CoreCompileInputs.cache
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.sourcelink.json
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.dll
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\refint\Inventario-Aguirre.dll
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.pdb
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.genruntimeconfig.cache
+C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\ref\Inventario-Aguirre.dll
