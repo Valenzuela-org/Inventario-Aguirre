@@ -10,3 +10,20 @@ string tallaProducto= "";
 int cantidadProgramada= 0;
 int cantidadProducida= 0;
 int cantidadDefectuosa= 0;
+
+//Solicitar datos al usuario
+Console.WriteLine("Ingrese el código del producto: ");
+codigoProducto = Console.ReadLine() ?? "";
+Console.WriteLine("Ingrese el nombre del producto: ");
+nombreProducto = Console.ReadLine() ?? "";
+Console.WriteLine("Ingrese el color del producto: ");
+colorProducto = Console.ReadLine() ?? "";
+Console.WriteLine("Ingrese la talla del producto: ");
+tallaProducto = Console.ReadLine() ?? "";
+
+//TEMPORAL imprimir los datos ingresados
+Console.WriteLine("Datos del producto ingresados:");
+Console.WriteLine("Código: " + codigoProducto);
+Console.WriteLine("Nombre: " + nombreProducto);
+Console.WriteLine("Color: " + colorProducto);
+Console.WriteLine("Talla: " + tallaProducto);
