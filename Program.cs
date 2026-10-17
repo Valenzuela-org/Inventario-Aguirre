@@ -41,3 +41,17 @@ while(true)
         Console.WriteLine("Por favor, ingrese un número válido para la cantidad programada.");
     }
 }
+
+//Unidades producidas
+while(true)
+{
+    Console.WriteLine("Ingrese la cantidad producida en unidades: ");
+    if(int.TryParse(Console.ReadLine(), out cantidadProducida) && cantidadProducida >= 0)
+    {
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Por favor, ingrese un número válido para la cantidad producida.");
+    }
+}
