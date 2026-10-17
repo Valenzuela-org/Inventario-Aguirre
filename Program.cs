@@ -27,3 +27,17 @@ Console.WriteLine("Código: " + codigoProducto);
 Console.WriteLine("Nombre: " + nombreProducto);
 Console.WriteLine("Color: " + colorProducto);
 Console.WriteLine("Talla: " + tallaProducto);
+
+//Solicitar cantidad programada
+while(true)
+{
+    Console.WriteLine("Ingrese la cantidad programada en unidades: ");
+    if(int.TryParse(Console.ReadLine(), out cantidadProgramada) && cantidadProgramada >= 0)
+    {
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Por favor, ingrese un número válido para la cantidad programada.");
+    }
+}
