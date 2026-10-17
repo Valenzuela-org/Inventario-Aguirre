@@ -4,28 +4,31 @@ using System.Linq;
 
 List<Producto> productos = new List<Producto>();
 //Mensaje de bienvenida
-Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
-
-//Declaración de variables
-string codigoProducto= "";
-string nombreProducto= "";
-string colorProducto= "";
-string tallaProducto= "";
-
-int opcion= 0;
-int cantidadProgramada= 0;
-int cantidadProducida= 0;
-int cantidadDefectuosa= 0;
-
-//Menu de opciones
-Console.WriteLine("Seleccione una opción:");
-Console.WriteLine("1. Ingresar nuevo producto");
-Console.WriteLine("2. Actualizar producto existente");
-Console.WriteLine("3. Eliminar producto");
-Console.WriteLine("4. Buscar producto existente");
-Console.WriteLine("5. Salir");
-if(int.TryParse(Console.ReadLine(),out opcion))
+int opcion = 0;
+do
 {
+  Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
+
+  //Declaración de variables
+  string codigoProducto= "";
+  string nombreProducto= "";
+  string colorProducto= "";
+  string tallaProducto= "";
+
+
+
+  //Menu de opciones
+  Console.WriteLine("Seleccione una opción:");
+  Console.WriteLine("1. Ingresar nuevo producto");
+  Console.WriteLine("2. Actualizar producto existente");
+  Console.WriteLine("3. Eliminar producto");
+  Console.WriteLine("4. Buscar producto existente");
+  Console.WriteLine("5. Salir");
+
+
+  Console.Write("Seleccione una opción: ");
+  if(int.TryParse(Console.ReadLine(),out opcion))
+  {
     switch(opcion)
     {
         case 1:
@@ -39,6 +42,24 @@ if(int.TryParse(Console.ReadLine(),out opcion))
             colorProducto = Console.ReadLine() ?? "";
             Console.WriteLine("Ingrese la talla del producto: ");
             tallaProducto = Console.ReadLine() ?? "";
+            
+            //para que la opción de búsqueda y actualización funcionen
+            productos.Add(new Producto
+
+            {
+                Codigo = codigoProducto,
+                Nombre = nombreProducto,
+                Color = colorProducto,
+                Talla = tallaProducto
+            
+            }
+            );
+
+  
+
+
+
+   Console.WriteLine("Producto registrado correctamente.");
 
             //TEMPORAL imprimir los datos ingresados
             Console.WriteLine("Datos del producto ingresados:");
@@ -75,10 +96,12 @@ if(int.TryParse(Console.ReadLine(),out opcion))
             break;
         case 3:
             Console.WriteLine("Opción 3 seleccionada: Eliminar producto");
+
             break;
         case 4:
             Console.WriteLine("Opción 4 seleccionada: Buscar producto existente");
             string codigoBuscar = Console.ReadLine() ?? "";
+            Console.WriteLine("Ingrese el código del producto a buscar: " + codigoBuscar);
 
     Producto? encontrado = productos.Find(
         p => p.Codigo == codigoBuscar
@@ -106,39 +129,22 @@ if(int.TryParse(Console.ReadLine(),out opcion))
             break;
     }
 
-}
+  }
 
-//Solicitar opción al usuario
-Console.WriteLine("Ingrese su opción: "); 
+  else
+  {
+    Console.WriteLine("Entrada no válida. Por favor, ingrese un número del 1 al 5.");
+  }
+
+} while (opcion != 5);
 
 
-//Solicitar cantidad programada
-while(true)
-{
-    Console.WriteLine("Ingrese la cantidad programada en unidades: ");
-    if(int.TryParse(Console.ReadLine(), out cantidadProgramada) && cantidadProgramada >= 0)
-    {
-        break;
-    }
-    else
-    {
-        Console.WriteLine("Por favor, ingrese un número válido para la cantidad programada.");
-    }
-}
 
-//Unidades producidas
-while(true)
-{
-    Console.WriteLine("Ingrese la cantidad producida en unidades: ");
-    if(int.TryParse(Console.ReadLine(), out cantidadProducida) && cantidadProducida >= 0)
-    {
-        break;
-    }
-    else
-    {
-        Console.WriteLine("Por favor, ingrese un número válido para la cantidad producida.");
-    }
-}
+
+
+
+
+
 class Producto
 {
     public string Codigo { get; set; } = "";
