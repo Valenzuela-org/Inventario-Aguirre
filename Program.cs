@@ -42,6 +42,14 @@ do
             //Solicitar datos al usuario
             Console.WriteLine("Ingrese el código del producto: ");
             codigoProducto = Console.ReadLine() ?? "";
+
+            //Validar que no exista un codigo duplicado
+            if (productos.Exists(p=> p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine("Error: El código del producto ya existe.");
+                break;
+            }
+
             Console.WriteLine("Ingrese el nombre del producto: ");
             nombreProducto = Console.ReadLine() ?? "";
             Console.WriteLine("Ingrese el color del producto: ");
