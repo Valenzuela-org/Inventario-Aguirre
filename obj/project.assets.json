@@ -8,32 +8,24 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\hp\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ccahu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hp\\OneDrive\\Desktop\\Repositorio Definitivo\\Inventario-Aguirre\\Inventario-Aguirre.csproj",
+      "projectUniqueName": "C:\\Users\\ccahu\\OneDrive\\Desktop\\Inventario-Aguirre\\Inventario-Aguirre.csproj",
       "projectName": "Inventario-Aguirre",
-      "projectPath": "C:\\Users\\hp\\OneDrive\\Desktop\\Repositorio Definitivo\\Inventario-Aguirre\\Inventario-Aguirre.csproj",
-      "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hp\\OneDrive\\Desktop\\Repositorio Definitivo\\Inventario-Aguirre\\obj\\",
+      "projectPath": "C:\\Users\\ccahu\\OneDrive\\Desktop\\Inventario-Aguirre\\Inventario-Aguirre.csproj",
+      "packagesPath": "C:\\Users\\ccahu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ccahu\\OneDrive\\Desktop\\Inventario-Aguirre\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\ccahu\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

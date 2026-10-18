@@ -13,3 +13,18 @@ C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug
 C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.pdb
 C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.genruntimeconfig.cache
 C:\Users\hp\OneDrive\Desktop\Repositorio Definitivo\Inventario-Aguirre\obj\Debug\net10.0\ref\Inventario-Aguirre.dll
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.exe
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.deps.json
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.runtimeconfig.json
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.dll
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\bin\Debug\net10.0\Inventario-Aguirre.pdb
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfoInputs.cache
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.AssemblyInfo.cs
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.csproj.CoreCompileInputs.cache
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.sourcelink.json
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.dll
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\refint\Inventario-Aguirre.dll
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.pdb
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\Inventario-Aguirre.genruntimeconfig.cache
+C:\Users\ccahu\OneDrive\Desktop\Inventario-Aguirre\obj\Debug\net10.0\ref\Inventario-Aguirre.dll
