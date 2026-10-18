@@ -74,7 +74,10 @@ do
                 Codigo = codigoProducto,
                 Nombre = nombreProducto,
                 Color = colorProducto,
-                Talla = tallaProducto
+                Talla = tallaProducto,
+                CantidadPedido = cantidadPedido,
+                CantidadProducida = cantidadProducida,
+                CantidadDefectuosa = cantidadDefectuosa
             
             });
 
@@ -270,6 +273,9 @@ class Producto
     public string Nombre { get; set; } = "";
     public string Color { get; set; } = "";
     public string Talla { get; set; } = "";
+    public string CantidadPedido { get; set; } = "";
+    public string CantidadProducida { get; set; } = "";
+    public string CantidadDefectuosa { get; set; } = "";
 }
 // Clase Para la Orden de producción
 class OrdenProduccion
