@@ -54,7 +54,7 @@ Console.WriteLine("==========================================");
             }
             
             nombreProducto= Producto.ValidarTexto("Ingrese el nombre del producto: ");
-            colorProducto= Producto.ValidarTexto("Ingrese el color del producto: ");
+            colorProducto= Producto.ValidarColor("Ingrese el color del producto: ");
             tallaProducto= Producto.ValidarTalla("Ingrese la talla del producto: ");
 
             //Pedir datos del encargadoo
@@ -210,6 +210,26 @@ class Producto
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
+
+    public static string ValidarColor(string mensaje)
+    {
+        string entrada;
+        string[] coloresValidos = { "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco" };
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada) && coloresValidos.Contains(entrada))
+            {   
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un color disponible (rojo, azul, verde, amarillo, negro, blanco).");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+        }
+    }
     public static string ValidarTalla(string mensaje)
     {
         string entrada;
