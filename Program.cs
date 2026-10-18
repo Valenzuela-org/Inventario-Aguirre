@@ -52,13 +52,10 @@ Console.WriteLine("==========================================");
                 Console.ReadKey();
                 break;
             }
-
-            Console.WriteLine("Ingrese el nombre del producto: ");
-            nombreProducto = Console.ReadLine() ?? "";
-            Console.WriteLine("Ingrese el color del producto: ");
-            colorProducto = Console.ReadLine() ?? "";
-            Console.WriteLine("Ingrese la talla del producto: ");
-            tallaProducto = Console.ReadLine() ?? "";       
+            
+            nombreProducto= Producto.ValidarTexto("Ingrese el nombre del producto: ");
+            colorProducto= Producto.ValidarTexto("Ingrese el color del producto: ");
+            tallaProducto= Producto.ValidarTexto("Ingrese la talla del producto: ");
 
             //Pedir datos del encargadoo
             Console.WriteLine("Ingrese el nombre del encargado del producto: ");
@@ -213,5 +210,21 @@ class Producto
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
-}
 
+    public static string ValidarTexto(string mensaje)
+    {
+        string entrada;
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada)&& entrada.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
+}
