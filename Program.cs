@@ -32,6 +32,7 @@ do
 
 
   Console.Write("Seleccione una opción: ");
+
   if(int.TryParse(Console.ReadLine(),out opcion))
   {
     switch(opcion)
@@ -86,8 +87,7 @@ do
             string codigoActualizar = Console.ReadLine() ?? "";
 
     Producto? productoActualizar = productos.Find(
-        p => p.Codigo == codigoActualizar
-
+        p => p.Codigo.Equals(codigoActualizar, StringComparison.OrdinalIgnoreCase)
     );
 
     if (productoActualizar != null)
@@ -123,7 +123,7 @@ do
             string codigoEliminar = Console.ReadLine() ?? "";
 
             Producto? productoEliminar = productos.Find(
-                p => p.Codigo == codigoEliminar
+                p => p.Codigo.Equals(codigoEliminar, StringComparison.OrdinalIgnoreCase)
             );
 
             if (productoEliminar != null)
@@ -144,7 +144,8 @@ do
             string codigoBuscar = Console.ReadLine() ?? "";
 
             Producto? encontrado = productos.Find(
-               p => p.Codigo == codigoBuscar
+               p => p.Codigo.Equals(codigoBuscar,
+                StringComparison.OrdinalIgnoreCase)
     );
 
     if (encontrado != null)
@@ -165,15 +166,20 @@ do
     }
 
             break;
-        case 5:    
-        // bloque para registrar la orden de producción    
-            Console.WriteLine("Saliendo del sistema. HAsta luego!  ");
+        case 5:       
+            Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
                 break;
 
-     default:
-            Console.WriteLine("Opción no válida. Por favor, seleccione una opción del 1 al 5.");
+        default:
+            Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida seleccione del 1 al 5.");
             break;
-            }
+    }
+  }
+  else
+  {
+    Console.WriteLine("ingrese un número valido.");
+    opcion = 0; 
+  }
 
 } while (opcion != 5);
 
