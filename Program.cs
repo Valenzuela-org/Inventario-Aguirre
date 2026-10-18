@@ -55,7 +55,7 @@ Console.WriteLine("==========================================");
             
             nombreProducto= Producto.ValidarTexto("Ingrese el nombre del producto: ");
             colorProducto= Producto.ValidarTexto("Ingrese el color del producto: ");
-            tallaProducto= Producto.ValidarTexto("Ingrese la talla del producto: ");
+            tallaProducto= Producto.ValidarTalla("Ingrese la talla del producto: ");
 
             //Pedir datos del encargadoo
             Console.WriteLine("Ingrese el nombre del encargado del producto: ");
@@ -210,6 +210,23 @@ class Producto
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
+    public static string ValidarTalla(string mensaje)
+    {
+        string entrada;
+        string[] tallasValidas = { "XS", "S", "M", "L", "XL", "XXL" };
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada) && tallasValidas.Contains(entrada.ToUpper()))
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido (XS, S, M, L, XL, XXL).");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
 
     public static string ValidarTexto(string mensaje)
     {
