@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 List<Producto> productos = new List<Producto>();
+
+//lista para guardar las ordenes de producción
+List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
+
 //Mensaje de bienvenida
 int opcion = 0;
 do
@@ -23,7 +27,8 @@ do
   Console.WriteLine("2. Actualizar producto existente");
   Console.WriteLine("3. Eliminar producto");
   Console.WriteLine("4. Buscar producto existente");
-  Console.WriteLine("5. Salir");
+  Console.WriteLine("5. Registrar orden de producción"); //agrergado
+  Console.WriteLine("6. Salir");
 
 
   Console.Write("Seleccione una opción: ");
@@ -121,9 +126,33 @@ do
     }
 
             break;
-        case 5:
-            Console.WriteLine("Opción 5 seleccionada: Salir");
+        case 5:    
+        // bloque para registrar la orden de producción    
+            Console.WriteLine("Opción 5 seleccionada: Registrar Orden de Producción");
+            
+            Console.Write("Ingrese el número de la orden de producción: ");
+            string numeroOrden = Console.ReadLine() ?? "";
+
+            Console.Write("ingrese el codigo del Producto: ");
+            string codProdOrden = Console.ReadLine() ?? "";
+
+            Console.Write("Ingrese la cantidad programada: ");
+            int cantidadProgramada = 0;
+            int.TryParse(Console.ReadLine(), out cantidadProgramada);
+
+            ordenesProduccion.Add(nuevaOrden);
+
+            //Verificacion de que la orden se registro
+
+
+            Console.WriteLine("\nOrden de producción registrada correctamente:"); 
+            Console.WriteLine("---- Datos de la orden Guardada ----");
+            Console.WriteLine(N° de orden: " + nuevaOrden.NumeroOrden);
+            Console.WriteLine("Código del producto: " + nuevaOrden.CodigoProducto);
+            Console.WriteLine("Cantidad programada: " + nuevaOrden.CantidadProgramada);
             break;
+
+
         default:
             Console.WriteLine("Opción no válida. Por favor, seleccione una opción del 1 al 5.");
             break;
