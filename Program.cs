@@ -19,6 +19,9 @@ do
   string nombreProducto= "";
   string colorProducto= "";
   string tallaProducto= "";
+  string cantidadPedido= "";
+  string cantidadProducida= "";                  
+  string cantidadDefectuosa= "";
 
 
 
@@ -56,7 +59,14 @@ do
             colorProducto = Console.ReadLine() ?? "";
             Console.WriteLine("Ingrese la talla del producto: ");
             tallaProducto = Console.ReadLine() ?? "";
+            Console.WriteLine("Ingrese la cantidad pedida del producto: ");
+            cantidadPedido = Console.ReadLine() ?? "";
+            Console.WriteLine("Ingrese la cantidad producida del producto: ");
+            cantidadProducida = Console.ReadLine() ?? "";
+            Console.WriteLine("Ingrese la cantidad defectuosa del producto: ");
+            cantidadDefectuosa = Console.ReadLine() ?? "";
             
+
             //para que la opción de búsqueda y actualización funcionen
             productos.Add(new Producto
 
@@ -76,10 +86,12 @@ do
             Console.WriteLine("Nombre: " + nombreProducto);
             Console.WriteLine("Color: " + colorProducto);
             Console.WriteLine("Talla: " + tallaProducto);
+            Console.WriteLine("Cantidad pedido: " + cantidadPedido);
+            Console.WriteLine("Cantidad producida: " + cantidadProducida);
+            Console.WriteLine("Cantidad defectuosa: " + cantidadDefectuosa);
             break;
         case 2:
             Console.WriteLine("Opción 2 seleccionada: Actualizar producto existente");
-
             Console.Write("Ingrese el código del producto a actualizar: ");
             string codigoActualizar = Console.ReadLine() ?? "";
 
@@ -98,6 +110,15 @@ do
 
         Console.Write("Nueva talla: ");
         productoActualizar.Talla = Console.ReadLine() ?? "";
+
+        Console.Write("Nueva cantidad pedido: ");
+        productoActualizar.CantidadPedido = Console.ReadLine() ?? "";
+
+        Console.Write("Nueva cantidad producida: ");
+        productoActualizar.CantidadProducida = Console.ReadLine() ?? "";
+
+        Console.Write("Nueva cantidad defectuosa: ");
+        productoActualizar.CantidadDefectuosa = Console.ReadLine() ?? "";
 
         Console.WriteLine("Producto actualizado correctamente.");
     }
@@ -125,6 +146,15 @@ do
                 Console.WriteLine("Producto no encontrado.");
             }
 
+            if (productoEliminar != null)
+            {
+                productos.Remove(productoEliminar);
+                Console.WriteLine("Producto eliminado correctamente.");
+            }
+            else
+            {
+                Console.WriteLine("Producto no encontrado.");
+            }
             break;
         case 4:
             Console.WriteLine("Opción 4 seleccionada: Buscar producto existente");
@@ -143,6 +173,9 @@ do
         Console.WriteLine("Nombre: " + encontrado.Nombre);
         Console.WriteLine("Color: " + encontrado.Color);
         Console.WriteLine("Talla: " + encontrado.Talla);
+         Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+        Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
+        Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
     }
     else
 
