@@ -4,9 +4,6 @@ using System.Linq;
 
 List<Producto> productos = new List<Producto>();
 
-//lista para guardar las ordenes de producción
-List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
-
 //Mensaje de bienvenida
 int opcion = 0;
 
@@ -31,11 +28,11 @@ do
   Console.WriteLine("2. Actualizar producto existente");
   Console.WriteLine("3. Eliminar producto");
   Console.WriteLine("4. Buscar producto existente");
-  Console.WriteLine("5. Registrar orden de producción"); //agrergado
-  Console.WriteLine("6. Salir");
+  Console.WriteLine("5. Salir");
 
 
   Console.Write("Seleccione una opción: ");
+
   if(int.TryParse(Console.ReadLine(),out opcion))
   {
     switch(opcion)
@@ -78,20 +75,15 @@ do
             
             });
 
-            //TEMPORAL imprimir los datos ingresados
-            Console.WriteLine("Datos del producto ingresados:");
-            Console.WriteLine("Código: " + codigoProducto);
-            Console.WriteLine("Nombre: " + nombreProducto);
-            Console.WriteLine("Color: " + colorProducto);
-            Console.WriteLine("Talla: " + tallaProducto);
+            Console.WriteLine("Producto registrado correctamente.");
             break;
+
         case 2:
             Console.Write("Ingrese el código del producto a actualizar: ");
             string codigoActualizar = Console.ReadLine() ?? "";
 
     Producto? productoActualizar = productos.Find(
-        p => p.Codigo == codigoActualizar
-
+        p => p.Codigo.Equals(codigoActualizar, StringComparison.OrdinalIgnoreCase)
     );
 
     if (productoActualizar != null)
@@ -118,7 +110,7 @@ do
             string codigoEliminar = Console.ReadLine() ?? "";
 
             Producto? productoEliminar = productos.Find(
-                p => p.Codigo == codigoEliminar
+                p => p.Codigo.Equals(codigoEliminar, StringComparison.OrdinalIgnoreCase)
             );
 
             if (productoEliminar != null)
@@ -136,7 +128,8 @@ do
             string codigoBuscar = Console.ReadLine() ?? "";
 
             Producto? encontrado = productos.Find(
-               p => p.Codigo == codigoBuscar
+               p => p.Codigo.Equals(codigoBuscar,
+                StringComparison.OrdinalIgnoreCase)
     );
 
     if (encontrado != null)
@@ -161,82 +154,22 @@ do
     }
 
             break;
-        case 5:    
-        // bloque para registrar la orden de producción                
-            Console.Write("Ingrese el número de la orden: ");
-            string numeroOrden = Console.ReadLine() ?? "";
-
-            //validar que el numero de orden no este vacio
-            if (string.IsNullOrWhiteSpace(numeroOrden))
-            {
-                Console.WriteLine("El número de orden no puede estar vacío. Por favor, intente nuevamente.");
+        case 5:       
+            Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
                 break;
-            }
-
-            //verificar que no exista una orden con el mismo numero de orden
-            bool ordenExistente = ordenesProduccion.Exists(o => o.NumeroOrden == numeroOrden);
-            if (ordenExistente)
-            {
-                Console.WriteLine("Ya existe una orden con el número ingresado. Por favor, intente nuevamente.");
-                break;
-            }
-
-            Console.Write("ingrese el codigo del Producto: ");
-            string codProdOrden = Console.ReadLine() ?? "";
-
-            //COMPROBAR QUE EL PRODCUTO ESTE REGISTRADO
-            Producto? productoOrden = productos.Find(p => p.Codigo == codProdOrden);
-            if (productoOrden == null)
-            {
-                Console.WriteLine("El producto no existe, Registre el producto primero.");
-                break;
-            }
-
-            Console.Write("Ingrese la cantidad programada: ");
-            if (!int.TryParse(Console.ReadLine(), out int cantidadProgramada) || cantidadProgramada <= 0)
-            {
-                Console.WriteLine("La cantidad debe ser un número mayor a cero.");
-                break;
-            }
-
-            //crear la orden de produccion
-            OrdenProduccion nuevaOrden = new OrdenProduccion
-            {
-                NumeroOrden = numeroOrden,
-                CodigoProducto = codProdOrden,
-                CantidadProgramada = cantidadProgramada
-            };
-
-            //Guardar la orden en la lista
-
-            ordenesProduccion.Add(nuevaOrden);
-
-            //Confirmar el registro
-
-            Console.WriteLine("Número de orden: " + nuevaOrden.NumeroOrden);
-            Console.WriteLine("\n---- Datos de la orden Guardada ----");
-            Console.WriteLine("N° Orden de producción registrada correctamente:"); 
-            Console.WriteLine("Código del producto: " + nuevaOrden.CodigoProducto);
-            Console.WriteLine("Cantidad programada: " + nuevaOrden.CantidadProgramada);
-            break;
-
-        case 6:
-            Console.WriteLine("SALIENDO DEL SISTEMA. ¡Hasta luego!");
-            break;
 
         default:
-            Console.WriteLine("Opción no válida. Por favor, seleccione una opción del 1 al 6.");
+            Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida seleccione del 1 al 5.");
             break;
     }
-
   }
-
   else
   {
-    Console.WriteLine("Entrada no válida. Por favor, ingrese un número del 1 al 6.");
+    Console.WriteLine("ingrese un número valido.");
+    opcion = 0; 
   }
 
-} while (opcion != 6);
+} while (opcion != 5);
 
 //clase producto
 class Producto
@@ -253,10 +186,4 @@ class Producto
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
 }
-// Clase Para la Orden de producción
-class OrdenProduccion
-{
-    public string NumeroOrden { get; set; } = "";
-    public string CodigoProducto { get; set; } = "";
-    public int CantidadProgramada { get; set; } = 0;
-}
+
