@@ -69,6 +69,7 @@ do
                 Color = colorProducto,
                 Talla = tallaProducto,
                 Encargado = encargadoProducto,
+                FechaRegistro = DateTime.Now,
                 CantidadPedido = cantidadPedido,
                 CantidadProducida = cantidadProducida,
                 CantidadDefectuosa = cantidadDefectuosa
@@ -141,8 +142,9 @@ do
         Console.WriteLine("Talla: " + encontrado.Talla);
         Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
 
-        //Encargado encontrado
+        //Encargado y fecha de registro
         Console.WriteLine("Encargado: " + encontrado.Encargado);
+        Console.WriteLine("Fecha de registro: " + encontrado.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
 
         Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
         Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
@@ -181,6 +183,9 @@ class Producto
 
     //Encargado
     public string Encargado { get; set; } = "";
+
+    //Fecha de producto
+    public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
