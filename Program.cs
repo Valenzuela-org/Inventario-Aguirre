@@ -9,8 +9,6 @@ int opcion = 0;
 
 do
 {
-  Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
-
   //Declaración de variables
   string codigoProducto= "";
   string nombreProducto= "";
@@ -20,7 +18,11 @@ do
   string cantidadProducida= "";                  
   string cantidadDefectuosa= "";
 
-
+Console.Clear();
+Console.WriteLine("==========================================");
+Console.WriteLine("     SISTEMA DE INVENTARIO - AGUIRRE     ");
+Console.WriteLine($"Fecha y hora actual: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}");
+Console.WriteLine("==========================================");
 
   //Menu de opciones
   Console.WriteLine("Seleccione una opción:");
@@ -38,7 +40,6 @@ do
     switch(opcion)
     {
         case 1:
-            Console.WriteLine("Opción 1 seleccionada: Ingresar nuevo producto");
             //Solicitar datos al usuario
             Console.WriteLine("Ingrese el código del producto: ");
             codigoProducto = Console.ReadLine() ?? "";
@@ -47,6 +48,8 @@ do
             if (productos.Exists(p=> p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
             {
                 Console.WriteLine("Error: El código del producto ya existe.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
                 break;
             }
 
@@ -55,14 +58,11 @@ do
             Console.WriteLine("Ingrese el color del producto: ");
             colorProducto = Console.ReadLine() ?? "";
             Console.WriteLine("Ingrese la talla del producto: ");
-            tallaProducto = Console.ReadLine() ?? "";
-            Console.WriteLine("Ingrese la cantidad pedida del producto: ");
-            cantidadPedido = Console.ReadLine() ?? "";
-            Console.WriteLine("Ingrese la cantidad producida del producto: ");
-            cantidadProducida = Console.ReadLine() ?? "";
-            Console.WriteLine("Ingrese la cantidad defectuosa del producto: ");
-            cantidadDefectuosa = Console.ReadLine() ?? "";
-            
+            tallaProducto = Console.ReadLine() ?? "";       
+
+            //Pedir datos del encargadoo
+            Console.WriteLine("Ingrese el nombre del encargado del producto: ");
+            string encargadoProducto = Console.ReadLine() ?? "";     
 
             //para que la opción de búsqueda y actualización funcionen
             productos.Add(new Producto
@@ -72,6 +72,8 @@ do
                 Nombre = nombreProducto,
                 Color = colorProducto,
                 Talla = tallaProducto,
+                Encargado = encargadoProducto,
+                FechaRegistro = DateTime.Now,
                 CantidadPedido = cantidadPedido,
                 CantidadProducida = cantidadProducida,
                 CantidadDefectuosa = cantidadDefectuosa
@@ -79,10 +81,11 @@ do
             });
 
             Console.WriteLine("Producto registrado correctamente.");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
 
         case 2:
-            Console.WriteLine("Opción 2 seleccionada: Actualizar producto existente");
             Console.Write("Ingrese el código del producto a actualizar: ");
             string codigoActualizar = Console.ReadLine() ?? "";
 
@@ -92,6 +95,8 @@ do
 
     if (productoActualizar != null)
     {
+        Console.Write("Nuevo código: ");
+        productoActualizar.Codigo = Console.ReadLine() ?? "";
         Console.Write("Nuevo nombre: ");
         productoActualizar.Nombre = Console.ReadLine() ?? "";
 
@@ -100,25 +105,19 @@ do
 
         Console.Write("Nueva talla: ");
         productoActualizar.Talla = Console.ReadLine() ?? "";
-
-        Console.Write("Nueva cantidad pedido: ");
-        productoActualizar.CantidadPedido = Console.ReadLine() ?? "";
-
-        Console.Write("Nueva cantidad producida: ");
-        productoActualizar.CantidadProducida = Console.ReadLine() ?? "";
-
-        Console.Write("Nueva cantidad defectuosa: ");
-        productoActualizar.CantidadDefectuosa = Console.ReadLine() ?? "";
-
         Console.WriteLine("Producto actualizado correctamente.");
+        Console.WriteLine("Presione cualquier tecla para continuar...");
+        Console.ReadKey();
+        break;
     }
     else
     {
         Console.WriteLine("Producto no encontrado.");
     }
-            break;
+        Console.WriteLine("Presione cualquier tecla para continuar...");
+        Console.ReadKey();
+        break;
         case 3:
-            Console.WriteLine("Opción 3 seleccionada: Eliminar producto");
             Console.Write("Ingrese el código del producto a eliminar: ");
             string codigoEliminar = Console.ReadLine() ?? "";
 
@@ -130,16 +129,18 @@ do
             {
                 productos.Remove(productoEliminar);
                 Console.WriteLine("Producto eliminado correctamente.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
+                break;
             }
             else
             {
                 Console.WriteLine("Producto no encontrado.");
             }
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
-
-        case 4:
-            Console.WriteLine("Opción 4 seleccionada: Buscar producto existente");
-            
+        case 4:            
             Console.Write("Ingrese el código del producto a buscar: ");
             string codigoBuscar = Console.ReadLine() ?? "";
 
@@ -155,7 +156,12 @@ do
         Console.WriteLine("Nombre: " + encontrado.Nombre);
         Console.WriteLine("Color: " + encontrado.Color);
         Console.WriteLine("Talla: " + encontrado.Talla);
-         Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+        Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+
+        //Encargado y fecha de registro
+        Console.WriteLine("Encargado: " + encontrado.Encargado);
+        Console.WriteLine("Fecha de registro: " + encontrado.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
+
         Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
         Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
     }
@@ -165,19 +171,26 @@ do
         Console.WriteLine("Producto no encontrado.");
     }
 
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
         case 5:       
             Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
-                break;
+            break;
 
         default:
             Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida seleccione del 1 al 5.");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
     }
   }
   else
   {
-    Console.WriteLine("ingrese un número valido.");
+    Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida del 1 al 5.");
+    Console.WriteLine("Presione cualquier tecla para continuar...");
+    Console.ReadKey();
+
     opcion = 0; 
   }
 
@@ -190,6 +203,13 @@ class Producto
     public string Nombre { get; set; } = "";
     public string Color { get; set; } = "";
     public string Talla { get; set; } = "";
+
+    //Encargado
+    public string Encargado { get; set; } = "";
+
+    //Fecha de producto
+    public DateTime FechaRegistro { get; set; } = DateTime.Now;
+
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
