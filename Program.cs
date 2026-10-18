@@ -10,10 +10,10 @@ List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
 //Mensaje de bienvenida
 int opcion = 0;
 
+Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
+
 do
 {
-  Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
-
   //Declaración de variables
   string codigoProducto= "";
   string nombreProducto= "";
@@ -57,7 +57,11 @@ do
             Console.WriteLine("Ingrese el color del producto: ");
             colorProducto = Console.ReadLine() ?? "";
             Console.WriteLine("Ingrese la talla del producto: ");
-            tallaProducto = Console.ReadLine() ?? "";            
+            tallaProducto = Console.ReadLine() ?? "";       
+
+            //Pedir datos del encargadoo
+            Console.WriteLine("Ingrese el nombre del encargado del producto: ");
+            string encargadoProducto = Console.ReadLine() ?? "";     
 
             //para que la opción de búsqueda y actualización funcionen
             productos.Add(new Producto
@@ -67,13 +71,12 @@ do
                 Nombre = nombreProducto,
                 Color = colorProducto,
                 Talla = tallaProducto,
+                Encargado = encargadoProducto,
                 CantidadPedido = cantidadPedido,
                 CantidadProducida = cantidadProducida,
                 CantidadDefectuosa = cantidadDefectuosa
             
             });
-
-            Console.WriteLine("Producto registrado correctamente.");
 
             //TEMPORAL imprimir los datos ingresados
             Console.WriteLine("Datos del producto ingresados:");
@@ -144,6 +147,10 @@ do
         Console.WriteLine("Color: " + encontrado.Color);
         Console.WriteLine("Talla: " + encontrado.Talla);
         Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+
+        //Encargado encontrado
+        Console.WriteLine("Encargado: " + encontrado.Encargado);
+
         Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
         Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
     }
@@ -238,6 +245,10 @@ class Producto
     public string Nombre { get; set; } = "";
     public string Color { get; set; } = "";
     public string Talla { get; set; } = "";
+
+    //Encargado
+    public string Encargado { get; set; } = "";
+
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
