@@ -9,6 +9,7 @@ List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
 
 //Mensaje de bienvenida
 int opcion = 0;
+
 do
 {
   Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
@@ -57,14 +58,9 @@ do
                 Color = colorProducto,
                 Talla = tallaProducto
             
-            }
-            );
+            });
 
-  
-
-
-
-   Console.WriteLine("Producto registrado correctamente.");
+            Console.WriteLine("Producto registrado correctamente.");
 
             //TEMPORAL imprimir los datos ingresados
             Console.WriteLine("Datos del producto ingresados:");
@@ -75,10 +71,13 @@ do
             break;
         case 2:
             Console.WriteLine("Opción 2 seleccionada: Actualizar producto existente");
+
+            Console.Write("Ingrese el código del producto a actualizar: ");
             string codigoActualizar = Console.ReadLine() ?? "";
 
     Producto? productoActualizar = productos.Find(
         p => p.Codigo == codigoActualizar
+
     );
 
     if (productoActualizar != null)
@@ -101,15 +100,32 @@ do
             break;
         case 3:
             Console.WriteLine("Opción 3 seleccionada: Eliminar producto");
+            Console.Write("Ingrese el código del producto a eliminar: ");
+            string codigoEliminar = Console.ReadLine() ?? "";
+
+            Producto? productoEliminar = productos.Find(
+                p => p.Codigo == codigoEliminar
+            );
+
+            if (productoEliminar != null)
+            {
+                productos.Remove(productoEliminar);
+                Console.WriteLine("Producto eliminado correctamente.");
+            }
+            else
+            {
+                Console.WriteLine("Producto no encontrado.");
+            }
 
             break;
         case 4:
             Console.WriteLine("Opción 4 seleccionada: Buscar producto existente");
+            
+            Console.Write("Ingrese el código del producto a buscar: ");
             string codigoBuscar = Console.ReadLine() ?? "";
-            Console.WriteLine("Ingrese el código del producto a buscar: " + codigoBuscar);
 
-    Producto? encontrado = productos.Find(
-        p => p.Codigo == codigoBuscar
+            Producto? encontrado = productos.Find(
+               p => p.Codigo == codigoBuscar
     );
 
     if (encontrado != null)
@@ -121,6 +137,7 @@ do
         Console.WriteLine("Talla: " + encontrado.Talla);
     }
     else
+
     {
         Console.WriteLine("Producto no encontrado.");
     }
@@ -130,31 +147,69 @@ do
         // bloque para registrar la orden de producción    
             Console.WriteLine("Opción 5 seleccionada: Registrar Orden de Producción");
             
-            Console.Write("Ingrese el número de la orden de producción: ");
+            Console.Write("Ingrese el número de la orden: ");
             string numeroOrden = Console.ReadLine() ?? "";
+
+            //validar que el numero de orden no este vacio
+            if (string.IsNullOrWhiteSpace(numeroOrden))
+            {
+                Console.WriteLine("El número de orden no puede estar vacío. Por favor, intente nuevamente.");
+                break;
+            }
+
+            //verificar que no exista una orden con el mismo numero de orden
+            bool ordenExistente = ordenesProduccion.Exists(o => o.NumeroOrden == numeroOrden);
+            if (ordenExistente)
+            {
+                Console.WriteLine("Ya existe una orden con el número ingresado. Por favor, intente nuevamente.");
+                break;
+            }
 
             Console.Write("ingrese el codigo del Producto: ");
             string codProdOrden = Console.ReadLine() ?? "";
 
+            //COMPROBAR QUE EL PRODCUTO ESTE REGISTRADO
+            Producto? productoOrden = productos.Find(p => p.Codigo == codProdOrden);
+            if (productoOrden == null)
+            {
+                Console.WriteLine("El producto no existe, Registre el producto primero.");
+                break;
+            }
+
             Console.Write("Ingrese la cantidad programada: ");
-            int cantidadProgramada = 0;
-            int.TryParse(Console.ReadLine(), out cantidadProgramada);
+            if (!int.TryParse(Console.ReadLine(), out int cantidadProgramada) || cantidadProgramada <= 0)
+            {
+                Console.WriteLine("LA cantidad debe ser un Numero mayor a cero.");
+                break;
+            }
+
+            //crear la orden de produccion
+            OrdenProduccion nuevaOrden = new OrdenProduccion
+            {
+                NumeroOrden = numeroOrden,
+                CodigoProducto = codProdOrden,
+                CantidadProgramada = cantidadProgramada
+            };
+
+            //Guardar la orden en la lista
 
             ordenesProduccion.Add(nuevaOrden);
 
-            //Verificacion de que la orden se registro
+            //Confirmar el registro
 
-
-            Console.WriteLine("\nOrden de producción registrada correctamente:"); 
-            Console.WriteLine("---- Datos de la orden Guardada ----");
-            Console.WriteLine(N° de orden: " + nuevaOrden.NumeroOrden);
+            Console.WriteLine("Número de orden: " + nuevaOrden.NumeroOrden);
+            Console.WriteLine("\n---- Datos de la orden Guardada ----");
+            Console.WriteLine("N° Orden de producción registrada correctamente:"); 
             Console.WriteLine("Código del producto: " + nuevaOrden.CodigoProducto);
             Console.WriteLine("Cantidad programada: " + nuevaOrden.CantidadProgramada);
             break;
 
+        case 6:
+            Console.WriteLine("SALIENDO DEL SISTEMA. ¡Hasta luego!");
+            break;
 
         default:
-            Console.WriteLine("Opción no válida. Por favor, seleccione una opción del 1 al 5.");
+            Console.WriteLine("Opción no válida. Por favor, seleccione una opción del 1 al 6.");
             break;
     }
 
@@ -162,22 +217,23 @@ do
 
   else
   {
-    Console.WriteLine("Entrada no válida. Por favor, ingrese un número del 1 al 5.");
+    Console.WriteLine("Entrada no válida. Por favor, ingrese un número del 1 al 6.");
   }
 
-} while (opcion != 5);
+} while (opcion != 6);
 
-
-
-
-
-
-
-
+//clase producto
 class Producto
 {
     public string Codigo { get; set; } = "";
     public string Nombre { get; set; } = "";
     public string Color { get; set; } = "";
     public string Talla { get; set; } = "";
+}
+// Clase Para la Orden de producción
+class OrdenProduccion
+{
+    public string NumeroOrden { get; set; } = "";
+    public string CodigoProducto { get; set; } = "";
+    public int CantidadProgramada { get; set; } = 0;
 }
