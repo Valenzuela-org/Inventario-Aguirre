@@ -7,8 +7,6 @@ List<Producto> productos = new List<Producto>();
 //Mensaje de bienvenida
 int opcion = 0;
 
-Console.WriteLine("Bienvenido al sistema de inventario de Aguirre");
-
 do
 {
   //Declaración de variables
@@ -20,7 +18,11 @@ do
   string cantidadProducida= "";                  
   string cantidadDefectuosa= "";
 
-
+Console.Clear();
+Console.WriteLine("==========================================");
+Console.WriteLine("     SISTEMA DE INVENTARIO - AGUIRRE     ");
+Console.WriteLine($"Fecha y hora actual: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}");
+Console.WriteLine("==========================================");
 
   //Menu de opciones
   Console.WriteLine("Seleccione una opción:");
@@ -46,6 +48,8 @@ do
             if (productos.Exists(p=> p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
             {
                 Console.WriteLine("Error: El código del producto ya existe.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
                 break;
             }
 
@@ -77,6 +81,8 @@ do
             });
 
             Console.WriteLine("Producto registrado correctamente.");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
 
         case 2:
@@ -100,12 +106,17 @@ do
         Console.Write("Nueva talla: ");
         productoActualizar.Talla = Console.ReadLine() ?? "";
         Console.WriteLine("Producto actualizado correctamente.");
+        Console.WriteLine("Presione cualquier tecla para continuar...");
+        Console.ReadKey();
+        break;
     }
     else
     {
         Console.WriteLine("Producto no encontrado.");
     }
-            break;
+        Console.WriteLine("Presione cualquier tecla para continuar...");
+        Console.ReadKey();
+        break;
         case 3:
             Console.Write("Ingrese el código del producto a eliminar: ");
             string codigoEliminar = Console.ReadLine() ?? "";
@@ -118,11 +129,16 @@ do
             {
                 productos.Remove(productoEliminar);
                 Console.WriteLine("Producto eliminado correctamente.");
+                Console.WriteLine("Presione cualquier tecla para continuar...");
+                Console.ReadKey();
+                break;
             }
             else
             {
                 Console.WriteLine("Producto no encontrado.");
             }
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
         case 4:            
             Console.Write("Ingrese el código del producto a buscar: ");
@@ -155,19 +171,26 @@ do
         Console.WriteLine("Producto no encontrado.");
     }
 
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
         case 5:       
             Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
-                break;
+            break;
 
         default:
             Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida seleccione del 1 al 5.");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
     }
   }
   else
   {
-    Console.WriteLine("ingrese un número valido.");
+    Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida del 1 al 5.");
+    Console.WriteLine("Presione cualquier tecla para continuar...");
+    Console.ReadKey();
+
     opcion = 0; 
   }
 
