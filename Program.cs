@@ -214,13 +214,12 @@ class Producto
     public static string ValidarColor(string mensaje)
     {
         string entrada;
-        string[] coloresValidos = { "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco" };
+        string[] coloresValidos = { "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO" };
         while (true)
         {
             Console.Write(mensaje);
-            entrada = Console.ReadLine() ?? "";
-            if (!string.IsNullOrWhiteSpace(entrada) && coloresValidos.Contains(entrada))
-            {   
+            entrada =( Console.ReadLine() ?? "").Trim().ToUpper();
+            if (!string.IsNullOrWhiteSpace(entrada) && coloresValidos.Contains(entrada))  
             {
                 return entrada;
             }
@@ -229,7 +228,7 @@ class Producto
             Console.ReadKey();
         }
         }
-    }
+    
     public static string ValidarTalla(string mensaje)
     {
         string entrada;
@@ -247,6 +246,7 @@ class Producto
             Console.ReadKey();
         }
     }
+    
 
     public static string ValidarTexto(string mensaje)
     {
