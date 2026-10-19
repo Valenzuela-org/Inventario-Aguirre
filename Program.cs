@@ -53,7 +53,7 @@ Console.WriteLine("==========================================");
                 break;
             }
             
-            nombreProducto= Producto.ValidarTexto("Ingrese el nombre del producto: ");
+            nombreProducto= Producto.ValidarProducto("Ingrese el nombre del producto: ");
             colorProducto= Producto.ValidarColor("Ingrese el color del producto: ");
             tallaProducto= Producto.ValidarTalla("Ingrese la talla del producto: ");
 
@@ -210,6 +210,24 @@ class Producto
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
+
+    public static string ValidarProducto(string mensaje)
+    {
+        string entrada;
+        string[] productosValidos = { "CAMISA","POLO" };
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada) && productosValidos.Contains(entrada.ToUpper()))
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
 
     public static string ValidarColor(string mensaje)
     {
