@@ -390,24 +390,33 @@ Console.WriteLine("==========================================");
      break;
 
 
-        case "4":
+         case "4":
+            // Volver al menú principal
             break;
 
         default:
             Console.WriteLine("Opción inválida.");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
             break;
     }
 
-    Console.WriteLine("Presione cualquier tecla para continuar...");
-    Console.ReadKey();
+    if (opcionProduccion != "4")
+    {
+        Console.WriteLine("\nPresione cualquier tecla para continuar...");
+        Console.ReadKey();
+    }
+
     break;
 
 case 6:
     Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
     break;
 
+
+
         default:
-            Console.WriteLine("Opción inválida. Por favor, seleccione una opción válida seleccione del 1 al 5.");
+            Console.WriteLine("Opción inválida. Seleccione una opción del 1 al 6.");
             Console.WriteLine("Presione cualquier tecla para continuar...");
             Console.ReadKey();
             break;
