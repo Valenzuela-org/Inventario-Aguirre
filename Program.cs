@@ -259,7 +259,10 @@ Console.WriteLine("==========================================");
             Console.WriteLine("Presione cualquier tecla para continuar...");
             Console.ReadKey();
             break;
-        case 5:               
+        case 5:   
+        bool salirProduccion = false;
+        while (!salirProduccion)    
+        {        
            Console.Clear();
            Console.WriteLine("==========================================");
            Console.WriteLine("       GESTIÓN DE PRODUCCIÓN");
@@ -645,12 +648,12 @@ Console.WriteLine("==========================================");
      }  
 
          case "4":
+         salirProduccion = true;
             // Volver al menú principal
             break;
 
         default:
-            Console.WriteLine("Opción inválida.");
-            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.WriteLine("Opción inválida. Seleccione una opción del 1 al 4.");
             Console.ReadKey();
             break;
     }
@@ -660,7 +663,7 @@ Console.WriteLine("==========================================");
         Console.WriteLine("\nPresione cualquier tecla para continuar...");
         Console.ReadKey();
     }
-
+        }
     break;
 
 case 6:
