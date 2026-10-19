@@ -517,6 +517,17 @@ Console.WriteLine("==========================================");
        Console.WriteLine($"Total sin defectos: {totalProducido - totalDefectuoso}");
        Console.WriteLine($"Pendiente de producir: {totalProgramado - totalProducido}");
 
+       //Calcular los porcentajes sin dividir entre cero
+       double porcentajeAvance = totalProgramado > 0
+           ? (double)totalProducido / totalProgramado * 100
+           : 0;
+
+       double porcentajeDefectuoso = totalProducido > 0
+           ? (double)totalDefectuoso / totalProducido * 100
+           : 0;
+
+        Console.WriteLine($"Porcentaje de avance: {porcentajeAvance:F2}%");
+        Console.WriteLine($"Porcentaje de unidades defectuosas: {porcentajeDefectuoso:F2}%");
        break;
      }  
 
