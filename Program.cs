@@ -195,16 +195,24 @@ Console.WriteLine("==========================================");
      Console.WriteLine("     REGISTRAR ORDEN DE PRODUCCIÓN");
      Console.WriteLine("==========================================");
 
+
+     //Validar el código antes de buscar el producto
      string codigoOrden = Producto.ValidarCodigo(
         "Ingrese el código del producto: ");
+
+     if (string.IsNullOrWhiteSpace(codigoOrden))
+     {
+        Console.WriteLine("Error: debe ingresar un código de producto válido.");
+        break;
+     }
 
      Producto? productoOrden = productos.Find(
         p => p.Codigo.Equals(
             codigoOrden,
-            StringComparison.OrdinalIgnoreCase)
+            StringComparison.OrdinalIgnoreCase )
      );
 
-     if (productoOrden == null)
+     if(productoOrden == null)
      {
         Console.WriteLine("Error: el producto no existe en el inventario.");
         break;
@@ -215,8 +223,11 @@ Console.WriteLine("==========================================");
      Console.WriteLine($"Talla registrada: {productoOrden.Talla}");
 
      Console.Write("Ingrese la cantidad programada: ");
+     string entradaCantidad = Console.ReadLine() ?? "";
 
-     if (!int.TryParse(Console.ReadLine(), out int cantidadProgramada)
+     // Aceptar únicamente cantidades enteras mayores que cero
+
+     if (!int.TryParse(entradaCantidad, out int cantidadProgramada)
         || cantidadProgramada <= 0)
      {
         Console.WriteLine(
@@ -244,12 +255,12 @@ Console.WriteLine("==========================================");
      Console.WriteLine($"Número de orden: {nuevaOrden.NumeroOrden}");
      Console.WriteLine($"Producto: {nuevaOrden.NombreProducto}");
      Console.WriteLine($"Cantidad programada: {nuevaOrden.CantidadProgramada}");
+     Console.WriteLine($"Estado: {nuevaOrden.Estado}");
 
      Console.WriteLine("\nPresione cualquier tecla para continuar...");
      Console.ReadKey();
      break;
-
-        
+            
      
         case "2":
             Console.Clear();
