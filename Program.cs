@@ -41,8 +41,7 @@ Console.WriteLine("==========================================");
     {
         case 1:
             //Solicitar datos al usuario
-            Console.WriteLine("Ingrese el código del producto: ");
-            codigoProducto = Console.ReadLine() ?? "";
+            codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto: ");
 
             //Validar que no exista un codigo duplicado
             if (productos.Exists(p=> p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
@@ -53,7 +52,7 @@ Console.WriteLine("==========================================");
                 break;
             }
             
-            nombreProducto= Producto.ValidarTexto("Ingrese el nombre del producto: ");
+            nombreProducto= Producto.ValidarProducto("Ingrese el nombre del producto: ");
             colorProducto= Producto.ValidarColor("Ingrese el color del producto: ");
             tallaProducto= Producto.ValidarTalla("Ingrese la talla del producto: ");
 
@@ -211,16 +210,51 @@ class Producto
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
 
-    public static string ValidarColor(string mensaje)
+    public static string ValidarCodigo(string mensaje)
     {
         string entrada;
-        string[] coloresValidos = { "Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco" };
+        string patron = @"^A00-\d{1,5}$"; 
         while (true)
         {
             Console.Write(mensaje);
             entrada = Console.ReadLine() ?? "";
-            if (!string.IsNullOrWhiteSpace(entrada) && coloresValidos.Contains(entrada))
-            {   
+            if (!string.IsNullOrWhiteSpace(entrada) && System.Text.RegularExpressions.Regex.IsMatch(entrada, patron))
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
+
+    public static string ValidarProducto(string mensaje)
+    {
+        string entrada;
+        string[] productosValidos = { "CAMISA","POLO" };
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada) && productosValidos.Contains(entrada.ToUpper()))
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
+
+    public static string ValidarColor(string mensaje)
+    {
+        string entrada;
+        string[] coloresValidos = { "ROJO", "AZUL", "VERDE", "AMARILLO", "NEGRO", "BLANCO" };
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada =( Console.ReadLine() ?? "").Trim().ToUpper();
+            if (!string.IsNullOrWhiteSpace(entrada) && coloresValidos.Contains(entrada))  
             {
                 return entrada;
             }
@@ -229,7 +263,7 @@ class Producto
             Console.ReadKey();
         }
         }
-    }
+    
     public static string ValidarTalla(string mensaje)
     {
         string entrada;
@@ -247,6 +281,7 @@ class Producto
             Console.ReadKey();
         }
     }
+    
 
     public static string ValidarTexto(string mensaje)
     {
