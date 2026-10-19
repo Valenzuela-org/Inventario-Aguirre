@@ -198,35 +198,66 @@ Console.WriteLine("==========================================");
             Console.WriteLine("==========================================");
             Console.WriteLine("          ELIMINAR PRODUCTO EXISTENTE");
             Console.WriteLine("==========================================");
+            Console.WriteLine("1. Eliminar producto por código");
+            Console.WriteLine("2. Vaciar todo el inventario");
+            Console.Write("Seleccione una opción: ");
+            string opcionEliminar = Console.ReadLine() ?? "";
 
-            Producto? productoEliminar = null;
-
-            // Bucle para permitir reintentar si el código no existe
-            while (productoEliminar == null)
+            if (opcionEliminar == "2")
             {
-                Console.Write("Ingrese el código del producto a eliminar (o escriba 'SALIR' para volver): ");
-                string codigoEliminar = Console.ReadLine() ?? "";
-
-                if (codigoEliminar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                if (productos.Count == 0)
                 {
-                    break; 
+                    Console.WriteLine("\nEl inventario ya está vacío.");
                 }
-
-                productoEliminar = productos.Find(
-                    p => p.Codigo.Equals(codigoEliminar, StringComparison.OrdinalIgnoreCase)
-                );
-
-                if (productoEliminar == null)
+                else
                 {
-                    Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                    Console.Write("¿Está seguro de eliminar TODOS los productos del inventario? (S/N): ");
+                    string confirmacion = (Console.ReadLine() ?? "").Trim().ToUpper();
+
+                    if (confirmacion == "S")
+                    {
+                        productos.Clear();
+                        if (System.IO.File.Exists("productos.txt"))
+                        {
+                            System.IO.File.Delete("productos.txt");
+                        }
+                        Console.WriteLine("\n¡Todo el inventario ha sido borrado correctamente!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nOperación cancelada. No se borró nada.");
+                    }
                 }
             }
-
-            // Si encontró el producto se elimina de la lista
-            if (productoEliminar != null)
+            else
             {
-                productos.Remove(productoEliminar);
-                Console.WriteLine("\n¡Producto eliminado correctamente!");
+                Producto? productoEliminar = null;
+
+                while (productoEliminar == null)
+                {
+                    Console.Write("Ingrese el código del producto a eliminar (o escriba 'SALIR' para volver): ");
+                    string codigoEliminar = Console.ReadLine() ?? "";
+
+                    if (codigoEliminar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                    {
+                        break; 
+                    }
+
+                    productoEliminar = productos.Find(
+                        p => p.Codigo.Equals(codigoEliminar, StringComparison.OrdinalIgnoreCase)
+                    );
+
+                    if (productoEliminar == null)
+                    {
+                        Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                    }
+                }
+
+                if (productoEliminar != null)
+                {
+                    productos.Remove(productoEliminar);
+                    Console.WriteLine("\n¡Producto eliminado correctamente!");
+                }
             }
 
             Console.WriteLine("Presione cualquier tecla para continuar...");
