@@ -250,92 +250,141 @@ Console.WriteLine("==========================================");
      break;
 
         
-     case "2":
-     Console.Clear();
-     Console.WriteLine("==========================================");
-     Console.WriteLine("    ACTUALIZAR AVANCE DE PRODUCCIÓN");
-     Console.WriteLine("==========================================");
+     
+        case "2":
+            Console.Clear();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("    ACTUALIZAR AVANCE DE PRODUCCIÓN");
+            Console.WriteLine("==========================================");
 
-     if (ordenesProduccion.Count == 0)
-     {
-        Console.WriteLine("No hay órdenes de producción registradas.");
-        break;
-     }
+            // Verifica si existen órdenes para actualizar.
+            if (ordenesProduccion.Count == 0)
+            {
+                Console.WriteLine("No hay órdenes de producción registradas.");
+                break;
+            }
 
-     Console.WriteLine("\nÓrdenes registradas:");
+            // Muestra las órdenes y su avance actual.
+            Console.WriteLine("\nÓrdenes registradas:");
 
-     foreach (OrdenProduccion orden in ordenesProduccion)
-     {
-        Console.WriteLine(
-            $"Orden N.° {orden.NumeroOrden} | " +
-            $"{orden.NombreProducto} | {orden.Color} | " +
-            $"{orden.Talla} | Programado: {orden.CantidadProgramada}"
-        );
-     }
+            foreach (OrdenProduccion orden in ordenesProduccion)
+            {
+                // Calcula las unidades aceptadas y las pendientes.
+                int aceptadasOrden =
+                    orden.CantidadProducida - orden.CantidadDefectuosa;
 
-     Console.Write("\nIngrese el número de orden: ");
+                int pendientesOrden =
+                    orden.CantidadProgramada - orden.CantidadProducida;
 
-     if (!int.TryParse(Console.ReadLine(), out int numeroOrden))
-     {
-        Console.WriteLine("Error: ingrese un número de orden válido.");
-        break;
-     }
+                // Calcula el porcentaje de cumplimiento de la orden.
+                double cumplimientoOrden =
+                    (double)orden.CantidadProducida /
+                    orden.CantidadProgramada * 100;
 
-     OrdenProduccion? ordenActualizar = ordenesProduccion.Find(
-        o => o.NumeroOrden == numeroOrden
-     );
+                Console.WriteLine(
+                    $"Orden N.° {orden.NumeroOrden} | " +
+                    $"{orden.NombreProducto} | {orden.Color} | " +
+                    $"{orden.Talla} | Programado: {orden.CantidadProgramada} | " +
+                    $"Producido: {orden.CantidadProducida} | " +
+                    $"Aceptado: {aceptadasOrden} | " +
+                    $"Pendiente: {pendientesOrden} | " +
+                    $"Cumplimiento: {cumplimientoOrden:F2}%"
+                );
+            }
 
-     if (ordenActualizar == null)
-     {
-        Console.WriteLine("Error: no se encontró esa orden.");
-        break;
-     }
+            // Solicita el número de la orden que se actualizará.
+            Console.Write("\nIngrese el número de orden: ");
 
-     Console.WriteLine($"\nProducto: {ordenActualizar.NombreProducto}");
-     Console.WriteLine($"Cantidad programada: {ordenActualizar.CantidadProgramada}");
-     Console.WriteLine($"Producidas anteriormente: {ordenActualizar.CantidadProducida}");
-     Console.WriteLine($"Defectuosas anteriormente: {ordenActualizar.CantidadDefectuosa}");
+            if (!int.TryParse(Console.ReadLine(), out int numeroOrden))
+            {
+                Console.WriteLine("Error: ingrese un número de orden válido.");
+                break;
+            }
 
-     Console.Write("\nIngrese el total acumulado de unidades producidas: ");
+            // Busca la orden seleccionada en la lista.
+            OrdenProduccion? ordenActualizar = ordenesProduccion.Find(
+                o => o.NumeroOrden == numeroOrden
+            );
 
-     if (!int.TryParse(Console.ReadLine(), out int producidas)
-        || producidas < 0
-        || producidas > ordenActualizar.CantidadProgramada)
-     {
-        Console.WriteLine(
-            "Error: la cantidad debe estar entre 0 y la cantidad programada."
-        );
-        break;
-     }
+            // Impide actualizar una orden que no existe.
+            if (ordenActualizar == null)
+            {
+                Console.WriteLine("Error: no se encontró esa orden.");
+                break;
+            }
 
-     Console.Write("Ingrese el total acumulado de unidades defectuosas: ");
+            // Muestra el estado actual antes de modificarlo.
+            Console.WriteLine("\n--- AVANCE ACTUAL ---");
+            Console.WriteLine($"Producto: {ordenActualizar.NombreProducto}");
+            Console.WriteLine($"Cantidad programada: {ordenActualizar.CantidadProgramada}");
+            Console.WriteLine($"Unidades producidas: {ordenActualizar.CantidadProducida}");
+            Console.WriteLine($"Unidades defectuosas: {ordenActualizar.CantidadDefectuosa}");
+            Console.WriteLine(
+                $"Unidades aceptadas: " +
+                $"{ordenActualizar.CantidadProducida - ordenActualizar.CantidadDefectuosa}"
+            );
 
-     if (!int.TryParse(Console.ReadLine(), out int defectuosas)
-        || defectuosas < 0
-        || defectuosas > producidas)
-     {
-        Console.WriteLine(
-            "Error: las unidades defectuosas deben estar entre 0 y las producidas."
-        );
-        break;
-     }
+            // Solicita el total acumulado de unidades producidas.
+            Console.Write("\nIngrese el total acumulado de unidades producidas: ");
 
-     ordenActualizar.CantidadProducida = producidas;
-     ordenActualizar.CantidadDefectuosa = defectuosas;
+            // Comprueba que el nuevo total no sea inferior al anterior
+            // ni supere la cantidad programada.
+            if (!int.TryParse(Console.ReadLine(), out int producidas)
+                || producidas < ordenActualizar.CantidadProducida
+                || producidas > ordenActualizar.CantidadProgramada)
+            {
+                Console.WriteLine(
+                    "Error: el total producido no puede ser menor que el avance actual " +
+                    "ni superar la cantidad programada."
+                );
+                break;
+            }
 
-     int aceptadas = producidas - defectuosas;
-     int pendientes = ordenActualizar.CantidadProgramada - producidas;
-     double cumplimiento =
-        (double)producidas / ordenActualizar.CantidadProgramada * 100;
+            // Solicita el total acumulado de unidades defectuosas.
+            Console.Write("Ingrese el total acumulado de unidades defectuosas: ");
 
-     Console.WriteLine("\n¡Avance de producción actualizado!");
-     Console.WriteLine($"Unidades producidas: {producidas}");
-     Console.WriteLine($"Unidades defectuosas: {defectuosas}");
-     Console.WriteLine($"Unidades aceptadas: {aceptadas}");
-     Console.WriteLine($"Unidades pendientes: {pendientes}");
-     Console.WriteLine($"Cumplimiento: {cumplimiento:F2}%");
+            // Evita reducir los defectos registrados o superar las unidades producidas.
+            if (!int.TryParse(Console.ReadLine(), out int defectuosas)
+                || defectuosas < ordenActualizar.CantidadDefectuosa
+                || defectuosas > producidas)
+            {
+                Console.WriteLine(
+                    "Error: las unidades defectuosas no pueden ser menores que " +
+                    "las registradas anteriormente ni superar las producidas."
+                );
+                break;
+            }
 
-     break;
+            // Guarda los valores anteriores para informar el cambio realizado.
+            int produccionAnterior = ordenActualizar.CantidadProducida;
+            int defectuosasAnteriores = ordenActualizar.CantidadDefectuosa;
+
+            // Actualiza los acumulados de producción de la orden seleccionada.
+            ordenActualizar.CantidadProducida = producidas;
+            ordenActualizar.CantidadDefectuosa = defectuosas;
+
+            // Calcula los resultados después de la actualización.
+            int aceptadas = producidas - defectuosas;
+            int pendientes =
+                ordenActualizar.CantidadProgramada - producidas;
+
+            double cumplimiento =
+                (double)producidas /
+                ordenActualizar.CantidadProgramada * 100;
+
+            // Muestra el cambio y el estado final de la producción.
+            Console.WriteLine("\n¡Avance de producción actualizado!");
+            Console.WriteLine(
+                $"Unidades producidas: {produccionAnterior} -> {producidas}"
+            );
+            Console.WriteLine(
+                $"Unidades defectuosas: {defectuosasAnteriores} -> {defectuosas}"
+            );
+            Console.WriteLine($"Unidades aceptadas: {aceptadas}");
+            Console.WriteLine($"Unidades pendientes: {pendientes}");
+            Console.WriteLine($"Cumplimiento: {cumplimiento:F2}%");
+
+            break;
 
 
         
