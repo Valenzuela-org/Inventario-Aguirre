@@ -34,7 +34,8 @@ Console.WriteLine("==========================================");
   Console.WriteLine("3. Eliminar producto");
   Console.WriteLine("4. Buscar producto existente");
   Console.WriteLine("5. Gestión de producción");
-  Console.WriteLine("6. Salir");
+  Console.WriteLine("6. Reporte general de producción");
+  Console.WriteLine("7. Salir");
 
 
   Console.Write("Seleccione una opción: ");
@@ -80,7 +81,7 @@ Console.WriteLine("==========================================");
                         }
                     }
 
-                    // Si decidió salir durante el código, rompemos el for
+                    // Si decidió salir durante el código, rompe el for
                     if (codigoProducto.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                     {
                         break;
@@ -135,7 +136,7 @@ Console.WriteLine("==========================================");
 
                 if (codigoActualizar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                 {
-                    break; // Rompe el while y regresa al menú sin hacer nada
+                    break;
                 }
 
                 productoActualizar = productos.Find(
@@ -148,11 +149,10 @@ Console.WriteLine("==========================================");
                 }
             }
 
-            // Si encontró el producto, procedemos a actualizar
+            // Si encontró el producto, actualiza
             if (productoActualizar != null)
             {
-                // Opcional: puedes usar tus validadores aquí si quieres asegurar los nuevos datos, 
-                // o mantener la lectura directa que ya tenías:
+
                 Console.Write("Nuevo código: ");
                 productoActualizar.Codigo = Console.ReadLine() ?? "";
                 
@@ -187,7 +187,7 @@ Console.WriteLine("==========================================");
 
                 if (codigoEliminar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                 {
-                    break; // Rompe el while y regresa al menú sin hacer nada
+                    break; 
                 }
 
                 productoEliminar = productos.Find(
@@ -200,7 +200,7 @@ Console.WriteLine("==========================================");
                 }
             }
 
-            // Si encontró el producto, procedemos a eliminarlo
+            // Si encontró el producto se elimina de la lista
             if (productoEliminar != null)
             {
                 productos.Remove(productoEliminar);
@@ -226,7 +226,7 @@ Console.WriteLine("==========================================");
 
                 if (codigoBuscar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                 {
-                    break; // Rompe el while y regresa al menú sin hacer nada
+                    break; 
                 }
 
                 encontrado = productos.Find(
@@ -239,7 +239,7 @@ Console.WriteLine("==========================================");
                 }
             }
 
-            // Si encontró el producto, mostramos los detalles
+            // Si encontró el producto, muestra sus detalles
             if (encontrado != null)
             {
                 Console.WriteLine("\n¡Producto encontrado!");
@@ -647,6 +647,52 @@ Console.WriteLine("==========================================");
     break;
 
 case 6:
+    Console.Clear();
+    Console.WriteLine("==========================================");
+    Console.WriteLine("       REPORTE GENERAL DE PRODUCCIÓN");
+    Console.WriteLine("==========================================");
+
+    if (ordenesProduccion.Count == 0)
+    {
+        Console.WriteLine("No hay órdenes de producción registradas.");
+        Console.WriteLine("Presione cualquier tecla para continuar...");
+        Console.ReadKey();
+        break;
+    }
+
+    int totalProgramadoGeneral = 0;
+    int totalProducidoGeneral = 0;
+    int totalDefectuosoGeneral = 0;
+
+    foreach (OrdenProduccion orden in ordenesProduccion)
+    {
+        totalProgramadoGeneral += orden.CantidadProgramada;
+        totalProducidoGeneral += orden.CantidadProducida;
+        totalDefectuosoGeneral += orden.CantidadDefectuosa;
+    }
+
+    double porcentajeAvanceGeneral = totalProgramadoGeneral > 0
+        ? (double)totalProducidoGeneral / totalProgramadoGeneral * 100
+        : 0;
+
+    double porcentajeDefectuosoGeneral = totalProducidoGeneral > 0
+        ? (double)totalDefectuosoGeneral / totalProducidoGeneral * 100
+        : 0;
+
+    Console.WriteLine($"Total de órdenes: {ordenesProduccion.Count}");
+    Console.WriteLine($"Total programado: {totalProgramadoGeneral}");
+    Console.WriteLine($"Total producido: {totalProducidoGeneral}");
+    Console.WriteLine($"Total defectuoso: {totalDefectuosoGeneral}");
+    Console.WriteLine($"Total sin defectos: {totalProducidoGeneral - totalDefectuosoGeneral}");
+    Console.WriteLine($"Pendiente de producir: {totalProgramadoGeneral - totalProducidoGeneral}");
+    Console.WriteLine($"Porcentaje de avance general: {porcentajeAvanceGeneral:F2}%");
+    Console.WriteLine($"Porcentaje de unidades defectuosas general: {porcentajeDefectuosoGeneral:F2}%");
+
+    Console.WriteLine("\nPresione cualquier tecla para continuar...");
+    Console.ReadKey();
+    break;
+
+case 7:
     Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
     break;
 
@@ -668,7 +714,7 @@ case 6:
     opcion = 0; 
   }
 
-} while (opcion != 6);
+} while (opcion != 7);
 
 //clase producto
 class Producto
