@@ -5,6 +5,30 @@ using System.Linq;
 List<Producto> productos = new List<Producto>();
 List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
 
+if(System.IO.File.Exists("productos.txt"))
+{
+    string[] lineas = System.IO.File.ReadAllLines("productos.txt");
+    foreach (string linea in lineas)
+    {
+        string[] partes = linea.Split('|');
+        if (partes.Length >= 6)
+                {
+                    productos.Add(new Producto
+                    {
+                        Codigo = partes[0],
+                        Nombre = partes[1],
+                        Color = partes[2],
+                        Talla = partes[3],
+                        Encargado = partes[4],
+                        FechaRegistro = DateTime.TryParse(partes[5], out DateTime f) ? f : DateTime.Now,
+                        CantidadPedido = partes.Length > 6 ? partes[6] : "",
+                        CantidadProducida = partes.Length > 7 ? partes[7] : "",
+                        CantidadDefectuosa = partes.Length > 8 ? partes[8] : ""
+                    });
+                }
+    }
+}
+
 int siguienteNumeroOrden = 1;
 
 //Mensaje de bienvenida
@@ -737,16 +761,15 @@ case 6:
     break;
 
 case 7:
-    Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
+    List<string> lineasGuardar = new List<string>();
+    foreach (Producto p in productos)
+    {
+        lineasGuardar.Add($"{p.Codigo}|{p.Nombre}|{p.Color}|{p.Talla}|{p.Encargado}|{p.FechaRegistro:O}|{p.CantidadPedido}|{p.CantidadProducida}|{p.CantidadDefectuosa}");
+    }
+    System.IO.File.WriteAllLines("productos.txt", lineasGuardar);
+
+    Console.WriteLine("Saliendo del sistema. ¡Datos guardados correctamente!");
     break;
-
-
-
-        default:
-            Console.WriteLine("Opción inválida. Seleccione una opción del 1 al 6.");
-            Console.WriteLine("Presione cualquier tecla para continuar...");
-            Console.ReadKey();
-            break;
     }
   }
   else
