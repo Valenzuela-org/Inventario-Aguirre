@@ -492,6 +492,7 @@ Console.WriteLine("==========================================");
         Console.WriteLine($"Orden N.º: {ordenReporte.NumeroOrden}");
         Console.WriteLine($"Código: {ordenReporte.CodigoProducto}");
         Console.WriteLine($"Producto: {ordenReporte.NombreProducto}");
+        Console.WriteLine($"Estado: {ordenReporte.Estado}");
         Console.WriteLine($"Color: {ordenReporte.Color}");
         Console.WriteLine($"Talla: {ordenReporte.Talla}");
         Console.WriteLine($"Fecha de registro: {ordenReporte.FechaRegistro:dd/MM/yyyy HH:mm:ss}");
@@ -681,4 +682,19 @@ class OrdenProduccion
     public int CantidadProducida { get; set; }
     public int CantidadDefectuosa { get; set; }
     public DateTime FechaRegistro { get; set; } = DateTime.Now;
+    
+    //Determinar automáticamente el estado de la orden
+    public string Estado
+    {
+        get
+        {
+            if(CantidadProducida == 0)
+                return "Pendiente";
+                
+            if(CantidadProducida >= CantidadProgramada)
+                return "Completada";
+
+            return "En producción";
+        }
+    }
 }
