@@ -41,8 +41,7 @@ Console.WriteLine("==========================================");
     {
         case 1:
             //Solicitar datos al usuario
-            Console.WriteLine("Ingrese el código del producto: ");
-            codigoProducto = Console.ReadLine() ?? "";
+            codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto: ");
 
             //Validar que no exista un codigo duplicado
             if (productos.Exists(p=> p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
@@ -210,6 +209,24 @@ class Producto
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
+
+    public static string ValidarCodigo(string mensaje)
+    {
+        string entrada;
+        string patron = @"^A00-\d{1,5}$"; 
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada) && System.Text.RegularExpressions.Regex.IsMatch(entrada, patron))
+            {
+                return entrada;
+            }
+            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
 
     public static string ValidarProducto(string mensaje)
     {
