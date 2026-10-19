@@ -44,6 +44,10 @@ Console.WriteLine("==========================================");
     switch(opcion)
     {
         case 1:
+            Console.Clear();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("     INGRESO DE NUEVO PRODUCTO");
+            Console.WriteLine("==========================================");
             //Solicitar datos al usuario
             codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto: ");
 
@@ -61,8 +65,7 @@ Console.WriteLine("==========================================");
             tallaProducto= Producto.ValidarTalla("Ingrese la talla del producto: ");
 
             //Pedir datos del encargadoo
-            Console.WriteLine("Ingrese el nombre del encargado del producto: ");
-            string encargadoProducto = Console.ReadLine() ?? "";     
+            string encargadoProducto = Producto.ValidarTexto("Ingrese el nombre del encargado del producto: ");
 
             //para que la opción de búsqueda y actualización funcionen
             productos.Add(new Producto
@@ -86,6 +89,10 @@ Console.WriteLine("==========================================");
             break;
 
         case 2:
+            Console.Clear();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("     ACTUALIZAR PRODUCTO EXISTENTE");
+            Console.WriteLine("==========================================");
             Console.Write("Ingrese el código del producto a actualizar: ");
             string codigoActualizar = Console.ReadLine() ?? "";
 
@@ -118,6 +125,10 @@ Console.WriteLine("==========================================");
         Console.ReadKey();
         break;
         case 3:
+            Console.Clear();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("     ELIMINAR PRODUCTO EXISTENTE");
+            Console.WriteLine("==========================================");
             Console.Write("Ingrese el código del producto a eliminar: ");
             string codigoEliminar = Console.ReadLine() ?? "";
 
@@ -140,7 +151,11 @@ Console.WriteLine("==========================================");
             Console.WriteLine("Presione cualquier tecla para continuar...");
             Console.ReadKey();
             break;
-        case 4:            
+        case 4:       
+        Console.Clear();
+        Console.WriteLine("==========================================");
+        Console.WriteLine("     BUSCAR PRODUCTO EXISTENTE");
+        Console.WriteLine("==========================================");     
             Console.Write("Ingrese el código del producto a buscar: ");
             string codigoBuscar = Console.ReadLine() ?? "";
 
@@ -615,7 +630,7 @@ class Producto
             {
                 return entrada;
             }
-            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("El código es inválido. El código debe tener el formato A00-XXXXX");
             Console.WriteLine("Intenta escribir de nuevo...");
             Console.ReadKey();
         }
@@ -633,7 +648,7 @@ class Producto
             {
                 return entrada;
             }
-            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("La prenda es inválida. Por favor, ingrese un producto disponible (camisa o polo).");
             Console.WriteLine("Intenta escribir de nuevo...");
             Console.ReadKey();
         }
@@ -651,7 +666,7 @@ class Producto
             {
                 return entrada;
             }
-            Console.WriteLine("Entrada inválida. Por favor, ingrese un color disponible (rojo, azul, verde, amarillo, negro, blanco).");
+            Console.WriteLine("El color es inválido. Por favor, ingrese un color disponible (rojo, azul, verde, amarillo, negro, blanco).");
             Console.WriteLine("Intenta escribir de nuevo...");
             Console.ReadKey();
         }
@@ -669,7 +684,7 @@ class Producto
             {
                 return entrada;
             }
-            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido (XS, S, M, L, XL, XXL).");
+            Console.WriteLine("La talla es inválida. Por favor, ingrese un valor válido (XS, S, M, L, XL, XXL).");
             Console.WriteLine("Intenta escribir de nuevo...");
             Console.ReadKey();
         }
@@ -687,7 +702,7 @@ class Producto
             {
                 return entrada;
             }
-            Console.WriteLine("Entrada inválida. Por favor, ingrese un valor válido.");
+            Console.WriteLine("Entrada inválida. Por favor, ingrese solo letras y espacios. (No se permiten números ni caracteres especiales)");
             Console.WriteLine("Intenta escribir de nuevo...");
             Console.ReadKey();
         }
