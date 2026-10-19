@@ -389,23 +389,101 @@ Console.WriteLine("==========================================");
 
         
      case "3":
-     Console.Clear();
-     Console.WriteLine("==================================================");
-     Console.WriteLine("          REPORTE DE PRODUCCIÓN");
-     Console.WriteLine("==================================================");
-
-     if (ordenesProduccion.Count == 0)
      {
+       Console.Clear();
+       Console.WriteLine("==================================================");
+       Console.WriteLine("          REPORTE DE PRODUCCIÓN");
+       Console.WriteLine("==================================================");
+
+       //Verificar si existen órdenes registradas
+       if (ordenesProduccion.Count == 0)
+       {
         Console.WriteLine("No hay órdenes de producción registradas.");
         break;
-     }
+       }
 
-     int totalProgramado = 0;
-     int totalProducido = 0;
-     int totalDefectuoso = 0;
+       Console.WriteLine("\nSeleccione el tipo de consulta:");
+       Console.WriteLine("1. Buscar por código de producto");
+       Console.WriteLine("2. Buscar por color");
+       Console.WriteLine("3. Buscar por talla");
+       Console.WriteLine("4. Mostrar todas las órdenes");
+       Console.Write("Seleccione una opción: ");
 
-     foreach (OrdenProduccion ordenReporte in ordenesProduccion)
-     {
+       string opcionFiltro = Console.ReadLine() ?? "";
+
+
+        //Guardar las órdenes que coincidan con el filtro elegido
+        List<OrdenProduccion> ordenesFiltradas =
+         new List<OrdenProduccion>();
+
+       if (opcionFiltro == "4")
+       {
+        ordenesFiltradas.AddRange(ordenesProduccion);
+       }
+       else if (opcionFiltro == "1")
+       {
+        Console.Write("Ingrese el código del producto: ");
+        string codigoBuscado = Console.ReadLine() ?? "";
+
+         foreach (OrdenProduccion orden in ordenesProduccion)
+        {
+            if (string.Equals(orden.CodigoProducto, codigoBuscado,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                ordenesFiltradas.Add(orden);
+            }
+        }
+       }
+       else if (opcionFiltro == "2")
+
+        
+       {
+        Console.Write("Ingrese el color: ");
+        string colorBuscado = Console.ReadLine() ?? "";
+
+        foreach (OrdenProduccion orden in ordenesProduccion)
+        {
+            if (string.Equals(orden.Color, colorBuscado,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                ordenesFiltradas.Add(orden);
+            }
+        }
+       }
+       else if (opcionFiltro == "3")
+       {
+        Console.Write("Ingrese la talla: ");
+        string tallaBuscada = Console.ReadLine() ?? "";
+
+        foreach (OrdenProduccion orden in ordenesProduccion)
+        {
+            if (string.Equals(orden.Talla, tallaBuscada,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                ordenesFiltradas.Add(orden);
+            }
+        }
+       }
+       else
+
+       {
+        Console.WriteLine("Opción inválida. Seleccione del 1 al 4.");
+        break;
+       }
+
+       // Avisar cuando el filtro no encuentra ninguna orden.
+       if (ordenesFiltradas.Count == 0)
+       {
+        Console.WriteLine("\nNo se encontraron órdenes con ese criterio.");
+        break;
+       }
+
+       int totalProgramado = 0;
+       int totalProducido = 0;
+       int totalDefectuoso = 0;
+
+       foreach (OrdenProduccion ordenReporte in ordenesFiltradas)
+       {
         int cantidadSinDefectos =
             ordenReporte.CantidadProducida -
             ordenReporte.CantidadDefectuosa;
@@ -422,22 +500,24 @@ Console.WriteLine("==========================================");
         Console.WriteLine($"Cantidad defectuosa: {ordenReporte.CantidadDefectuosa}");
         Console.WriteLine($"Cantidad sin defectos: {cantidadSinDefectos}");
 
+        //Acumular las cantidades de las órdenes encontradas.
         totalProgramado += ordenReporte.CantidadProgramada;
         totalProducido += ordenReporte.CantidadProducida;
         totalDefectuoso += ordenReporte.CantidadDefectuosa;
-     }
+      }    
 
-     Console.WriteLine("\n==================================================");
-     Console.WriteLine("              RESUMEN GENERAL");
-     Console.WriteLine("==================================================");
-     Console.WriteLine($"Total programado: {totalProgramado}");
-     Console.WriteLine($"Total producido: {totalProducido}");
-     Console.WriteLine($"Total defectuoso: {totalDefectuoso}");
-     Console.WriteLine($"Total sin defectos: {totalProducido - totalDefectuoso}");
-     Console.WriteLine($"Pendiente de producir: {totalProgramado - totalProducido}");
+       Console.WriteLine("\n==================================================");
+       Console.WriteLine("              RESUMEN DEL REPORTE");
+       Console.WriteLine("==================================================");
+       Console.WriteLine($"Órdenes encontradas: {ordenesFiltradas.Count}");
+       Console.WriteLine($"Total programado: {totalProgramado}");
+       Console.WriteLine($"Total producido: {totalProducido}");
+       Console.WriteLine($"Total defectuoso: {totalDefectuoso}");
+       Console.WriteLine($"Total sin defectos: {totalProducido - totalDefectuoso}");
+       Console.WriteLine($"Pendiente de producir: {totalProgramado - totalProducido}");
 
-     break;
-
+       break;
+     }  
 
          case "4":
             // Volver al menú principal
