@@ -47,10 +47,13 @@ Console.WriteLine("==========================================");
           case 1:
             Console.Clear();
             Console.WriteLine("==========================================");
-            Console.WriteLine("     INGRESO DE NUEVO PRODUCTO");
+            Console.WriteLine("     INGRESO DE LOTE DE PRODUCTOS");
             Console.WriteLine("==========================================");
 
-            Console.Write("¿Cuántos productos deseas registrar?: ");
+            // 1. Pedir el encargado del lote UNA SOLA VEZ al inicio
+            string encargadoLote = Producto.ValidarEncargado("Ingrese el nombre del encargado del lote: ");
+
+            Console.Write("¿Cuántos productos deseas registrar en este lote?: ");
             if (int.TryParse(Console.ReadLine(), out int cantidadProductos) && cantidadProductos > 0)
             {
                 for (int i = 0; i < cantidadProductos; i++)
@@ -91,17 +94,14 @@ Console.WriteLine("==========================================");
                     colorProducto = Producto.ValidarColor("Ingrese el color del producto: ");
                     tallaProducto = Producto.ValidarTalla("Ingrese la talla del producto: ");
 
-                    // Pedir datos del encargado asegurando que no tenga símbolos raros
-                    string encargadoProducto = Producto.ValidarTexto("Ingrese el nombre del encargado del producto: ");
-
-                    // Agregar a la lista general
+                    // Agregar a la lista asignando automáticamente el encargado del lote
                     productos.Add(new Producto
                     {
                         Codigo = codigoProducto,
                         Nombre = nombreProducto,
                         Color = colorProducto,
                         Talla = tallaProducto,
-                        Encargado = encargadoProducto,
+                        Encargado = encargadoLote, // Usa el mismo encargado para todo el lote
                         FechaRegistro = DateTime.Now,
                         CantidadPedido = cantidadPedido,
                         CantidadProducida = cantidadProducida,
@@ -750,6 +750,29 @@ class Producto
     public string CantidadPedido { get; set; } = "";
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
+
+    //Validar encargado
+    public static string ValidarEncargado(string mensaje)
+    {
+        string entrada;
+        string[] encargadosAutorizados = { "ANTHONY", "IZBET", "SEBASTIAN", "DANIEL", "RENATO" };
+        while (true)
+        {
+            Console.Write(mensaje);
+            entrada = Console.ReadLine() ?? "";
+            if (!string.IsNullOrWhiteSpace(entrada) && entrada.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            {
+                if (encargadosAutorizados.Contains(entrada.ToUpper()))
+                {
+                    return entrada;
+                }
+                Console.WriteLine("El nombre del encargado no está autorizado. Por favor, ingrese un encargado autorizado.");
+            }
+            Console.WriteLine("El nombre del encargado es inválido. Por favor, ingrese solo letras y espacios.");
+            Console.WriteLine("Intenta escribir de nuevo...");
+            Console.ReadKey();
+        }
+    }
 
     public static string ValidarCodigo(string mensaje)
     {
