@@ -4,6 +4,7 @@ using System.Linq;
 
 List<Producto> productos = new List<Producto>();
 List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
+int siguienteNumeroOrden = 1;
 
 if(System.IO.File.Exists("productos.txt"))
 {
@@ -28,8 +29,30 @@ if(System.IO.File.Exists("productos.txt"))
                 }
     }
 }
-
-int siguienteNumeroOrden = 1;
+if(System.IO.File.Exists("ordenes.txt"))
+{
+    string[] lineasOrdenes = System.IO.File.ReadAllLines("ordenes.txt");
+    foreach (string linea in lineasOrdenes)
+    {
+        string[] partes = linea.Split('|');
+        if (partes.Length >= 8)
+        {
+            ordenesProduccion.Add(new OrdenProduccion
+            {
+                NumeroOrden = int.TryParse(partes[0], out int n) ? n : 0,
+                CodigoProducto = partes[1],
+                NombreProducto = partes[2],
+                Color = partes[3],
+                Talla = partes[4],
+                Encargado = partes[5],
+                CantidadProgramada = int.TryParse(partes[6], out int cp) ? cp : 0,
+                CantidadProducida = int.TryParse(partes[7], out int cprod) ? cprod : 0,
+                CantidadDefectuosa = int.TryParse(partes[8], out int cdef) ? cdef : 0,
+                FechaRegistro = DateTime.TryParse(partes[9], out DateTime f) ? f : DateTime.Now
+            });
+        }
+    }
+}
 
 //Mensaje de bienvenida
 int opcion = 0;
@@ -220,6 +243,10 @@ Console.WriteLine("==========================================");
                         if (System.IO.File.Exists("productos.txt"))
                         {
                             System.IO.File.Delete("productos.txt");
+                        }
+                        if (System.IO.File.Exists("ordenes.txt"))
+                        {
+                            System.IO.File.Delete("ordenes.txt");
                         }
                         Console.WriteLine("\n¡Todo el inventario ha sido borrado correctamente!");
                     }
@@ -798,6 +825,13 @@ case 7:
         lineasGuardar.Add($"{p.Codigo}|{p.Nombre}|{p.Color}|{p.Talla}|{p.Encargado}|{p.FechaRegistro:O}|{p.CantidadPedido}|{p.CantidadProducida}|{p.CantidadDefectuosa}");
     }
     System.IO.File.WriteAllLines("productos.txt", lineasGuardar);
+
+    List<string> lineasOrdenes = new List<string>();
+    foreach (OrdenProduccion o in ordenesProduccion)
+    {
+        lineasOrdenes.Add($"{o.NumeroOrden}|{o.CodigoProducto}|{o.NombreProducto}|{o.Color}|{o.Talla}|{o.Encargado}|{o.CantidadProgramada}|{o.CantidadProducida}|{o.CantidadDefectuosa}|{o.FechaRegistro:O}");
+    }
+    System.IO.File.WriteAllLines("ordenes.txt", lineasOrdenes);
 
     Console.WriteLine("Saliendo del sistema. ¡Datos guardados correctamente!");
     break;
