@@ -327,6 +327,7 @@ Console.WriteLine("==========================================");
         NombreProducto = productoOrden.Nombre,
         Color = productoOrden.Color,
         Talla = productoOrden.Talla,
+        Encargado = productoOrden.Encargado,
         CantidadProgramada = cantidadProgramada,
         CantidadProducida = 0,
         CantidadDefectuosa = 0,
@@ -502,7 +503,8 @@ Console.WriteLine("==========================================");
        Console.WriteLine("1. Buscar por código de producto");
        Console.WriteLine("2. Buscar por color");
        Console.WriteLine("3. Buscar por talla");
-       Console.WriteLine("4. Mostrar todas las órdenes");
+       Console.WriteLine("4. Buscar por encargado");
+       Console.WriteLine("5. Mostrar todas las órdenes");
        Console.Write("Seleccione una opción: ");
 
        string opcionFiltro = Console.ReadLine() ?? "";
@@ -512,7 +514,7 @@ Console.WriteLine("==========================================");
         List<OrdenProduccion> ordenesFiltradas =
          new List<OrdenProduccion>();
 
-       if (opcionFiltro == "4")
+       if (opcionFiltro == "5")
        {
         ordenesFiltradas.AddRange(ordenesProduccion);
        }
@@ -560,10 +562,24 @@ Console.WriteLine("==========================================");
             }
         }
        }
+       else if(opcionFiltro=="4")
+       {
+        Console.WriteLine("Ingrese el nombre del encargado: ");
+        string encargadoBuscado = Console.ReadLine() ?? "";
+
+        foreach (OrdenProduccion orden in ordenesProduccion)
+        {
+            if (string.Equals(orden.Encargado, encargadoBuscado,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                ordenesFiltradas.Add(orden);
+            }
+        }
+       }
        else
 
        {
-        Console.WriteLine("Opción inválida. Seleccione del 1 al 4.");
+        Console.WriteLine("Opción inválida. Seleccione del 1 al 5.");
         break;
        }
 
@@ -591,6 +607,7 @@ Console.WriteLine("==========================================");
         Console.WriteLine($"Estado: {ordenReporte.Estado}");
         Console.WriteLine($"Color: {ordenReporte.Color}");
         Console.WriteLine($"Talla: {ordenReporte.Talla}");
+        Console.WriteLine($"Encargado: {ordenReporte.Encargado}");
         Console.WriteLine($"Fecha de registro: {ordenReporte.FechaRegistro:dd/MM/yyyy HH:mm:ss}");
         Console.WriteLine($"Cantidad programada: {ordenReporte.CantidadProgramada}");
         Console.WriteLine($"Cantidad producida: {ordenReporte.CantidadProducida}");
@@ -831,6 +848,7 @@ class OrdenProduccion
     public string NombreProducto { get; set; } = "";
     public string Color { get; set; } = "";
     public string Talla { get; set; } = "";
+    public string Encargado { get; set; } = "";
     public int CantidadProgramada { get; set; }
     public int CantidadProducida { get; set; }
     public int CantidadDefectuosa { get; set; }
