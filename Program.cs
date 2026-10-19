@@ -43,148 +43,218 @@ Console.WriteLine("==========================================");
   {
     switch(opcion)
     {
-        case 1:
+          case 1:
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("     INGRESO DE NUEVO PRODUCTO");
             Console.WriteLine("==========================================");
-            //Solicitar datos al usuario
-            codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto: ");
 
-            //Validar que no exista un codigo duplicado
-            if (productos.Exists(p=> p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
+            Console.Write("¿Cuántos productos deseas registrar?: ");
+            if (int.TryParse(Console.ReadLine(), out int cantidadProductos) && cantidadProductos > 0)
             {
-                Console.WriteLine("Error: El código del producto ya existe.");
-                Console.WriteLine("Presione cualquier tecla para continuar...");
-                Console.ReadKey();
-                break;
+                for (int i = 0; i < cantidadProductos; i++)
+                {
+                    Console.WriteLine($"\n--- Registro del producto {i + 1} de {cantidadProductos} ---");
+
+                    codigoProducto = "";
+                    bool codigoValido = false;
+
+                    // Bucle interno para asegurar que no avance si el código ya existe
+                    while (!codigoValido)
+                    {
+                        codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto (o 'SALIR' para cancelar): ");
+                        
+                        if (codigoProducto.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                        {
+                            break;
+                        }
+
+                        // Validar que no exista un código duplicado
+                        if (productos.Exists(p => p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            Console.WriteLine("Error: El código del producto ya existe en el inventario. Intente con otro.");
+                        }
+                        else
+                        {
+                            codigoValido = true;
+                        }
+                    }
+
+                    // Si decidió salir durante el código, rompemos el for
+                    if (codigoProducto.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                    {
+                        break;
+                    }
+
+                    nombreProducto = Producto.ValidarProducto("Ingrese el nombre del producto: ");
+                    colorProducto = Producto.ValidarColor("Ingrese el color del producto: ");
+                    tallaProducto = Producto.ValidarTalla("Ingrese la talla del producto: ");
+
+                    // Pedir datos del encargado asegurando que no tenga símbolos raros
+                    string encargadoProducto = Producto.ValidarTexto("Ingrese el nombre del encargado del producto: ");
+
+                    // Agregar a la lista general
+                    productos.Add(new Producto
+                    {
+                        Codigo = codigoProducto,
+                        Nombre = nombreProducto,
+                        Color = colorProducto,
+                        Talla = tallaProducto,
+                        Encargado = encargadoProducto,
+                        FechaRegistro = DateTime.Now,
+                        CantidadPedido = cantidadPedido,
+                        CantidadProducida = cantidadProducida,
+                        CantidadDefectuosa = cantidadDefectuosa
+                    });
+
+                    Console.WriteLine("¡Producto registrado correctamente en este lote!");
+                }
             }
-            
-            nombreProducto= Producto.ValidarProducto("Ingrese el nombre del producto: ");
-            colorProducto= Producto.ValidarColor("Ingrese el color del producto: ");
-            tallaProducto= Producto.ValidarTalla("Ingrese la talla del producto: ");
-
-            //Pedir datos del encargadoo
-            string encargadoProducto = Producto.ValidarTexto("Ingrese el nombre del encargado del producto: ");
-
-            //para que la opción de búsqueda y actualización funcionen
-            productos.Add(new Producto
-
+            else
             {
-                Codigo = codigoProducto,
-                Nombre = nombreProducto,
-                Color = colorProducto,
-                Talla = tallaProducto,
-                Encargado = encargadoProducto,
-                FechaRegistro = DateTime.Now,
-                CantidadPedido = cantidadPedido,
-                CantidadProducida = cantidadProducida,
-                CantidadDefectuosa = cantidadDefectuosa
-            
-            });
+                Console.WriteLine("Error: Debe ingresar un número entero mayor que cero.");
+            }
 
-            Console.WriteLine("Producto registrado correctamente.");
-            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.WriteLine("\nPresione cualquier tecla para continuar...");
             Console.ReadKey();
             break;
-
+            
         case 2:
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("     ACTUALIZAR PRODUCTO EXISTENTE");
             Console.WriteLine("==========================================");
-            Console.Write("Ingrese el código del producto a actualizar: ");
-            string codigoActualizar = Console.ReadLine() ?? "";
 
-    Producto? productoActualizar = productos.Find(
-        p => p.Codigo.Equals(codigoActualizar, StringComparison.OrdinalIgnoreCase)
-    );
+            Producto? productoActualizar = null;
 
-    if (productoActualizar != null)
-    {
-        Console.Write("Nuevo código: ");
-        productoActualizar.Codigo = Console.ReadLine() ?? "";
-        Console.Write("Nuevo nombre: ");
-        productoActualizar.Nombre = Console.ReadLine() ?? "";
-
-        Console.Write("Nuevo color: ");
-        productoActualizar.Color = Console.ReadLine() ?? "";
-
-        Console.Write("Nueva talla: ");
-        productoActualizar.Talla = Console.ReadLine() ?? "";
-        Console.WriteLine("Producto actualizado correctamente.");
-        Console.WriteLine("Presione cualquier tecla para continuar...");
-        Console.ReadKey();
-        break;
-    }
-    else
-    {
-        Console.WriteLine("Producto no encontrado.");
-    }
-        Console.WriteLine("Presione cualquier tecla para continuar...");
-        Console.ReadKey();
-        break;
-        case 3:
-            Console.Clear();
-            Console.WriteLine("==========================================");
-            Console.WriteLine("     ELIMINAR PRODUCTO EXISTENTE");
-            Console.WriteLine("==========================================");
-            Console.Write("Ingrese el código del producto a eliminar: ");
-            string codigoEliminar = Console.ReadLine() ?? "";
-
-            Producto? productoEliminar = productos.Find(
-                p => p.Codigo.Equals(codigoEliminar, StringComparison.OrdinalIgnoreCase)
-            );
-
-            if (productoEliminar != null)
+            // Bucle para permitir reintentar si el código no se encuentra
+            while (productoActualizar == null)
             {
-                productos.Remove(productoEliminar);
-                Console.WriteLine("Producto eliminado correctamente.");
-                Console.WriteLine("Presione cualquier tecla para continuar...");
-                Console.ReadKey();
-                break;
+                Console.Write("Ingrese el código del producto a actualizar (o escriba 'SALIR' para volver): ");
+                string codigoActualizar = Console.ReadLine() ?? "";
+
+                if (codigoActualizar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                {
+                    break; // Rompe el while y regresa al menú sin hacer nada
+                }
+
+                productoActualizar = productos.Find(
+                    p => p.Codigo.Equals(codigoActualizar, StringComparison.OrdinalIgnoreCase)
+                );
+
+                if (productoActualizar == null)
+                {
+                    Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                }
             }
-            else
+
+            // Si encontró el producto, procedemos a actualizar
+            if (productoActualizar != null)
             {
-                Console.WriteLine("Producto no encontrado.");
+                // Opcional: puedes usar tus validadores aquí si quieres asegurar los nuevos datos, 
+                // o mantener la lectura directa que ya tenías:
+                Console.Write("Nuevo código: ");
+                productoActualizar.Codigo = Console.ReadLine() ?? "";
+                
+                Console.Write("Nuevo nombre: ");
+                productoActualizar.Nombre = Console.ReadLine() ?? "";
+
+                Console.Write("Nuevo color: ");
+                productoActualizar.Color = Console.ReadLine() ?? "";
+
+                Console.Write("Nueva talla: ");
+                productoActualizar.Talla = Console.ReadLine() ?? "";
+
+                Console.WriteLine("\n¡Producto actualizado correctamente!");
             }
+
             Console.WriteLine("Presione cualquier tecla para continuar...");
             Console.ReadKey();
             break;
-        case 4:       
-        Console.Clear();
-        Console.WriteLine("==========================================");
-        Console.WriteLine("     BUSCAR PRODUCTO EXISTENTE");
-        Console.WriteLine("==========================================");     
-            Console.Write("Ingrese el código del producto a buscar: ");
-            string codigoBuscar = Console.ReadLine() ?? "";
+        case 3:
+            Console.Clear();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("          ELIMINAR PRODUCTO EXISTENTE");
+            Console.WriteLine("==========================================");
 
-            Producto? encontrado = productos.Find(
-               p => p.Codigo.Equals(codigoBuscar,
-                StringComparison.OrdinalIgnoreCase)
-    );
+            Producto? productoEliminar = null;
 
-    if (encontrado != null)
-    {
-        Console.WriteLine("\nProducto encontrado:");
-        Console.WriteLine("Código: " + encontrado.Codigo);
-        Console.WriteLine("Nombre: " + encontrado.Nombre);
-        Console.WriteLine("Color: " + encontrado.Color);
-        Console.WriteLine("Talla: " + encontrado.Talla);
-        Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+            // Bucle para permitir reintentar si el código no existe
+            while (productoEliminar == null)
+            {
+                Console.Write("Ingrese el código del producto a eliminar (o escriba 'SALIR' para volver): ");
+                string codigoEliminar = Console.ReadLine() ?? "";
 
-        //Encargado y fecha de registro
-        Console.WriteLine("Encargado: " + encontrado.Encargado);
-        Console.WriteLine("Fecha de registro: " + encontrado.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
+                if (codigoEliminar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                {
+                    break; // Rompe el while y regresa al menú sin hacer nada
+                }
 
-        Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
-        Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
-    }
-    else
+                productoEliminar = productos.Find(
+                    p => p.Codigo.Equals(codigoEliminar, StringComparison.OrdinalIgnoreCase)
+                );
 
-    {
-        Console.WriteLine("Producto no encontrado.");
-    }
+                if (productoEliminar == null)
+                {
+                    Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                }
+            }
+
+            // Si encontró el producto, procedemos a eliminarlo
+            if (productoEliminar != null)
+            {
+                productos.Remove(productoEliminar);
+                Console.WriteLine("\n¡Producto eliminado correctamente!");
+            }
+
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+            break;
+        case 4:
+            Console.Clear();
+            Console.WriteLine("==========================================");
+            Console.WriteLine("          BUSCAR PRODUCTO EXISTENTE");
+            Console.WriteLine("==========================================");
+
+            Producto? encontrado = null;
+
+            // Bucle para permitir reintentar si el código no se encuentra
+            while (encontrado == null)
+            {
+                Console.Write("Ingrese el código del producto a buscar (o escriba 'SALIR' para volver): ");
+                string codigoBuscar = Console.ReadLine() ?? "";
+
+                if (codigoBuscar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                {
+                    break; // Rompe el while y regresa al menú sin hacer nada
+                }
+
+                encontrado = productos.Find(
+                    p => p.Codigo.Equals(codigoBuscar, StringComparison.OrdinalIgnoreCase)
+                );
+
+                if (encontrado == null)
+                {
+                    Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                }
+            }
+
+            // Si encontró el producto, mostramos los detalles
+            if (encontrado != null)
+            {
+                Console.WriteLine("\n¡Producto encontrado!");
+                Console.WriteLine("------------------------------------------");
+                Console.WriteLine("Código: " + encontrado.Codigo);
+                Console.WriteLine("Nombre: " + encontrado.Nombre);
+                Console.WriteLine("Color: " + encontrado.Color);
+                Console.WriteLine("Talla: " + encontrado.Talla);
+                Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+                Console.WriteLine("Encargado: " + encontrado.Encargado);
+                Console.WriteLine("Fecha de registro: " + encontrado.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
+                Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
+                Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
+                Console.WriteLine("------------------------------------------");
+            }
 
             Console.WriteLine("Presione cualquier tecla para continuar...");
             Console.ReadKey();
