@@ -50,70 +50,68 @@ Console.WriteLine("==========================================");
             Console.WriteLine("     INGRESO DE LOTE DE PRODUCTOS");
             Console.WriteLine("==========================================");
 
-            // 1. Pedir el encargado del lote UNA SOLA VEZ al inicio
             string encargadoLote = Producto.ValidarEncargado("Ingrese el nombre del encargado del lote: ");
 
-            Console.Write("¿Cuántos productos deseas registrar en este lote?: ");
-            if (int.TryParse(Console.ReadLine(), out int cantidadProductos) && cantidadProductos > 0)
+            int cantidadProductos = 0;
+            while (true)
             {
-                for (int i = 0; i < cantidadProductos; i++)
+                Console.Write("¿Cuántos productos deseas registrar en este lote?: ");
+                if (int.TryParse(Console.ReadLine(), out cantidadProductos) && cantidadProductos > 0)
                 {
-                    Console.WriteLine($"\n--- Registro del producto {i + 1} de {cantidadProductos} ---");
+                    break;
+                }
+                Console.WriteLine("Error: Debe ingresar un número entero mayor que cero. Intente de nuevo.\n");
+            }
 
-                    codigoProducto = "";
-                    bool codigoValido = false;
+            for (int i = 0; i < cantidadProductos; i++)
+            {
+                Console.WriteLine($"\n--- Registro del producto {i + 1} de {cantidadProductos} ---");
 
-                    // Bucle interno para asegurar que no avance si el código ya existe
-                    while (!codigoValido)
-                    {
-                        codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto (o 'SALIR' para cancelar): ");
-                        
-                        if (codigoProducto.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
-                        {
-                            break;
-                        }
+                codigoProducto = "";
+                bool codigoValido = false;
 
-                        // Validar que no exista un código duplicado
-                        if (productos.Exists(p => p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
-                        {
-                            Console.WriteLine("Error: El código del producto ya existe en el inventario. Intente con otro.");
-                        }
-                        else
-                        {
-                            codigoValido = true;
-                        }
-                    }
-
-                    // Si decidió salir durante el código, rompe el for
+                while (!codigoValido)
+                {
+                    codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto: ");
+                    
                     if (codigoProducto.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }
 
-                    nombreProducto = Producto.ValidarProducto("Ingrese el nombre del producto: ");
-                    colorProducto = Producto.ValidarColor("Ingrese el color del producto: ");
-                    tallaProducto = Producto.ValidarTalla("Ingrese la talla del producto: ");
-
-                    // Agregar a la lista asignando automáticamente el encargado del lote
-                    productos.Add(new Producto
+                    if (productos.Exists(p => p.Codigo.Equals(codigoProducto, StringComparison.OrdinalIgnoreCase)))
                     {
-                        Codigo = codigoProducto,
-                        Nombre = nombreProducto,
-                        Color = colorProducto,
-                        Talla = tallaProducto,
-                        Encargado = encargadoLote, // Usa el mismo encargado para todo el lote
-                        FechaRegistro = DateTime.Now,
-                        CantidadPedido = cantidadPedido,
-                        CantidadProducida = cantidadProducida,
-                        CantidadDefectuosa = cantidadDefectuosa
-                    });
-
-                    Console.WriteLine("¡Producto registrado correctamente en este lote!");
+                        Console.WriteLine("Error: El código del producto ya existe en el inventario. Intente con otro.");
+                    }
+                    else
+                    {
+                        codigoValido = true;
+                    }
                 }
-            }
-            else
-            {
-                Console.WriteLine("Error: Debe ingresar un número entero mayor que cero.");
+
+                if (codigoProducto.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                {
+                    break;
+                }
+
+                nombreProducto = Producto.ValidarProducto("Ingrese el nombre del producto: ");
+                colorProducto = Producto.ValidarColor("Ingrese el color del producto: ");
+                tallaProducto = Producto.ValidarTalla("Ingrese la talla del producto: ");
+
+                productos.Add(new Producto
+                {
+                    Codigo = codigoProducto,
+                    Nombre = nombreProducto,
+                    Color = colorProducto,
+                    Talla = tallaProducto,
+                    Encargado = encargadoLote,
+                    FechaRegistro = DateTime.Now,
+                    CantidadPedido = cantidadPedido,
+                    CantidadProducida = cantidadProducida,
+                    CantidadDefectuosa = cantidadDefectuosa
+                });
+
+                Console.WriteLine("¡Producto registrado correctamente en este lote!");
             }
 
             Console.WriteLine("\nPresione cualquier tecla para continuar...");
@@ -213,50 +211,76 @@ Console.WriteLine("==========================================");
         case 4:
             Console.Clear();
             Console.WriteLine("==========================================");
-            Console.WriteLine("          BUSCAR PRODUCTO EXISTENTE");
+            Console.WriteLine("          CONSULTA DE PRODUCTOS");
             Console.WriteLine("==========================================");
+            Console.WriteLine("1. Buscar producto por código");
+            Console.WriteLine("2. Mostrar todos los productos registrados");
+            Console.Write("Seleccione una opción: ");
+            string opcionBusqueda = Console.ReadLine() ?? "";
 
-            Producto? encontrado = null;
-
-            // Bucle para permitir reintentar si el código no se encuentra
-            while (encontrado == null)
+            if (opcionBusqueda == "2")
             {
-                Console.Write("Ingrese el código del producto a buscar (o escriba 'SALIR' para volver): ");
-                string codigoBuscar = Console.ReadLine() ?? "";
-
-                if (codigoBuscar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                if (productos.Count == 0)
                 {
-                    break; 
+                    Console.WriteLine("\nNo hay productos registrados en el inventario.");
+                }
+                else
+                {
+                    Console.WriteLine($"\n--- LISTADO GENERAL DE INVENTARIO ({productos.Count} productos) ---");
+                    foreach (Producto p in productos)
+                    {
+                        Console.WriteLine("------------------------------------------");
+                        Console.WriteLine("Código: " + p.Codigo);
+                        Console.WriteLine("Nombre: " + p.Nombre);
+                        Console.WriteLine("Color: " + p.Color);
+                        Console.WriteLine("Talla: " + p.Talla);
+                        Console.WriteLine("Encargado: " + p.Encargado);
+                        Console.WriteLine("Fecha de registro: " + p.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
+                    }
+                    Console.WriteLine("------------------------------------------");
+                }
+            }
+            else
+            {
+                Producto? encontrado = null;
+                while (encontrado == null)
+                {
+                    Console.Write("Ingrese el código del producto a buscar (o escriba 'SALIR' para volver): ");
+                    string codigoBuscar = Console.ReadLine() ?? "";
+
+                    if (codigoBuscar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
+                    {
+                        break; 
+                    }
+
+                    encontrado = productos.Find(
+                        p => p.Codigo.Equals(codigoBuscar, StringComparison.OrdinalIgnoreCase)
+                    );
+
+                    if (encontrado == null)
+                    {
+                        Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                    }
                 }
 
-                encontrado = productos.Find(
-                    p => p.Codigo.Equals(codigoBuscar, StringComparison.OrdinalIgnoreCase)
-                );
-
-                if (encontrado == null)
+                if (encontrado != null)
                 {
-                    Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
+                    Console.WriteLine("\n¡Producto encontrado!");
+                    Console.WriteLine("------------------------------------------");
+                    Console.WriteLine("Código: " + encontrado.Codigo);
+                    Console.WriteLine("Nombre: " + encontrado.Nombre);
+                    Console.WriteLine("Color: " + encontrado.Color);
+                    Console.WriteLine("Talla: " + encontrado.Talla);
+                    Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
+                    Console.WriteLine("Encargado: " + encontrado.Encargado);
+                    Console.WriteLine("Fecha de registro: " + encontrado.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
+                    Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
+                    Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
+                    Console.WriteLine("------------------------------------------");
                 }
             }
 
-            // Si encontró el producto, muestra sus detalles
-            if (encontrado != null)
-            {
-                Console.WriteLine("\n¡Producto encontrado!");
-                Console.WriteLine("------------------------------------------");
-                Console.WriteLine("Código: " + encontrado.Codigo);
-                Console.WriteLine("Nombre: " + encontrado.Nombre);
-                Console.WriteLine("Color: " + encontrado.Color);
-                Console.WriteLine("Talla: " + encontrado.Talla);
-                Console.WriteLine("Cantidad pedido: " + encontrado.CantidadPedido);
-                Console.WriteLine("Encargado: " + encontrado.Encargado);
-                Console.WriteLine("Fecha de registro: " + encontrado.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss"));
-                Console.WriteLine("Cantidad producida: " + encontrado.CantidadProducida);
-                Console.WriteLine("Cantidad defectuosa: " + encontrado.CantidadDefectuosa);
-                Console.WriteLine("------------------------------------------");
-            }
-
-            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.WriteLine("\nPresione cualquier tecla para continuar...");
             Console.ReadKey();
             break;
         case 5:   
