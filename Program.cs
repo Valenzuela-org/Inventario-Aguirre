@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
+//Colecciones globales para almacenar productos y órdenes de producción
 List<Producto> productos = new List<Producto>();
 List<OrdenProduccion> ordenesProduccion = new List<OrdenProduccion>();
 int siguienteNumeroOrden = 1;
 
+//Carga de datos desde archivos de texto si existen
 if(System.IO.File.Exists("productos.txt"))
 {
     string[] lineas = System.IO.File.ReadAllLines("productos.txt");
@@ -29,6 +31,8 @@ if(System.IO.File.Exists("productos.txt"))
                 }
     }
 }
+
+//Cargondo las órdenes de producción desde el archivo de texto si existe
 if(System.IO.File.Exists("ordenes.txt"))
 {
     string[] lineasOrdenes = System.IO.File.ReadAllLines("ordenes.txt");
@@ -54,12 +58,12 @@ if(System.IO.File.Exists("ordenes.txt"))
     }
 }
 
-//Mensaje de bienvenida
+//Bucle principal del programa
 int opcion = 0;
 
 do
 {
-  //Declaración de variables
+  //Declaración de variables temporales para el registro de productos
   string codigoProducto= "";
   string nombreProducto= "";
   string colorProducto= "";
@@ -74,7 +78,7 @@ Console.WriteLine("     SISTEMA DE INVENTARIO - AGUIRRE     ");
 Console.WriteLine($"Fecha y hora actual: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}");
 Console.WriteLine("==========================================");
 
-  //Menu de opciones
+  //Menu de opciones del sistema
   Console.WriteLine("Seleccione una opción:");
   Console.WriteLine("1. Ingresar nuevo producto");
   Console.WriteLine("2. Actualizar producto existente");
@@ -92,11 +96,13 @@ Console.WriteLine("==========================================");
     switch(opcion)
     {
           case 1:
+            //Mostrar encabezado para el ingreso de lote masivos de productos
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("     INGRESO DE LOTE DE PRODUCTOS");
             Console.WriteLine("==========================================");
 
+            //Validación del encargado del lote
             string encargadoLote = Producto.ValidarEncargado("Ingrese el nombre del encargado del lote: ");
 
             int cantidadProductos = 0;
@@ -110,6 +116,7 @@ Console.WriteLine("==========================================");
                 Console.WriteLine("Error: Debe ingresar un número entero mayor que cero. Intente de nuevo.\n");
             }
 
+            //Bucle para registrar cada producto en el lote
             for (int i = 0; i < cantidadProductos; i++)
             {
                 Console.WriteLine($"\n--- Registro del producto {i + 1} de {cantidadProductos} ---");
@@ -117,6 +124,7 @@ Console.WriteLine("==========================================");
                 codigoProducto = "";
                 bool codigoValido = false;
 
+                //Evitar que se repita el código del producto en el inventario
                 while (!codigoValido)
                 {
                     codigoProducto = Producto.ValidarCodigo("Ingrese el código del producto: ");
@@ -141,10 +149,12 @@ Console.WriteLine("==========================================");
                     break;
                 }
 
+                //Validación de otros campos del producto
                 nombreProducto = Producto.ValidarProducto("Ingrese el nombre del producto: ");
                 colorProducto = Producto.ValidarColor("Ingrese el color del producto: ");
                 tallaProducto = Producto.ValidarTalla("Ingrese la talla del producto: ");
 
+                //Inserta el producto en la lista de productos
                 productos.Add(new Producto
                 {
                     Codigo = codigoProducto,
@@ -166,6 +176,7 @@ Console.WriteLine("==========================================");
             break;
             
         case 2:
+            //Mostrar encabezado para la actualización de productos existentes
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("     ACTUALIZAR PRODUCTO EXISTENTE");
@@ -187,7 +198,6 @@ Console.WriteLine("==========================================");
                 productoActualizar = productos.Find(
                     p => p.Codigo.Equals(codigoActualizar, StringComparison.OrdinalIgnoreCase)
                 );
-
                 if (productoActualizar == null)
                 {
                     Console.WriteLine("Error: Producto no encontrado. Intente de nuevo.");
@@ -217,6 +227,7 @@ Console.WriteLine("==========================================");
             Console.ReadKey();
             break;
         case 3:
+            //Mostrar encabezado para la eliminación de productos existentes
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("          ELIMINAR PRODUCTO EXISTENTE");
@@ -228,6 +239,7 @@ Console.WriteLine("==========================================");
 
             if (opcionEliminar == "2")
             {
+                // Confirmación antes de vaciar todo el inventario
                 if (productos.Count == 0)
                 {
                     Console.WriteLine("\nEl inventario ya está vacío.");
@@ -291,6 +303,7 @@ Console.WriteLine("==========================================");
             Console.ReadKey();
             break;
         case 4:
+            //Mostrar encabezado para la consulta de productos existentes
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("          CONSULTA DE PRODUCTOS");
@@ -302,6 +315,7 @@ Console.WriteLine("==========================================");
 
             if (opcionBusqueda == "2")
             {
+                // Mostrar todos los productos registrados en el inventario
                 if (productos.Count == 0)
                 {
                     Console.WriteLine("\nNo hay productos registrados en el inventario.");
@@ -324,6 +338,7 @@ Console.WriteLine("==========================================");
             }
             else
             {
+                // Buscar producto por código
                 Producto? encontrado = null;
                 while (encontrado == null)
                 {
@@ -366,6 +381,7 @@ Console.WriteLine("==========================================");
             Console.ReadKey();
             break;
         case 5:   
+        //Mostrar encabezado para la gestión de producción
         bool salirProduccion = false;
         while (!salirProduccion)    
         {        
@@ -384,6 +400,7 @@ Console.WriteLine("==========================================");
     switch (opcionProduccion)
     {
         case "1":
+        //Mostrar encabezado para el registro de órdenes de producción
      Console.Clear();
      Console.WriteLine("==========================================");
      Console.WriteLine("     REGISTRAR ORDEN DE PRODUCCIÓN");
@@ -429,6 +446,7 @@ Console.WriteLine("==========================================");
         break;
      }
 
+    //Crear la nueva orden de producción y agregarla a la lista
      OrdenProduccion nuevaOrden = new OrdenProduccion
      {
         NumeroOrden = siguienteNumeroOrden,
@@ -458,6 +476,7 @@ Console.WriteLine("==========================================");
             
      
         case "2":
+        //Actualizar el avance de producción de una orden existente
             Console.Clear();
             Console.WriteLine("==========================================");
             Console.WriteLine("    ACTUALIZAR AVANCE DE PRODUCCIÓN");
@@ -623,6 +642,7 @@ Console.WriteLine("==========================================");
         List<OrdenProduccion> ordenesFiltradas =
          new List<OrdenProduccion>();
 
+        //Filtrar las órdenes según la opción seleccionada
        if (opcionFiltro == "5")
        {
         ordenesFiltradas.AddRange(ordenesProduccion);
@@ -699,6 +719,7 @@ Console.WriteLine("==========================================");
         break;
        }
 
+        //Calcular totales de producción y defectuosos para el resumen del reporte
        int totalProgramado = 0;
        int totalProducido = 0;
        int totalDefectuoso = 0;
@@ -729,6 +750,7 @@ Console.WriteLine("==========================================");
         totalDefectuoso += ordenReporte.CantidadDefectuosa;
       }    
 
+        //Presentar un resumen del reporte con totales y porcentajes
        Console.WriteLine("\n==================================================");
        Console.WriteLine("              RESUMEN DEL REPORTE");
        Console.WriteLine("==================================================");
@@ -773,6 +795,7 @@ Console.WriteLine("==========================================");
     break;
 
 case 6:
+    //Consolida el reporte general de producción de todas las órdenes registradas
     Console.Clear();
     Console.WriteLine("==========================================");
     Console.WriteLine("       REPORTE GENERAL DE PRODUCCIÓN");
@@ -819,6 +842,8 @@ case 6:
     break;
 
 case 7:
+    
+    //Guardar los datos de productos y órdenes de producción en archivos de texto antes de salir
     List<string> lineasGuardar = new List<string>();
     foreach (Producto p in productos)
     {
@@ -848,7 +873,7 @@ case 7:
 
 } while (opcion != 7);
 
-//clase producto
+//Clase Producto con validadores estaticos
 class Producto
 {
     public string Codigo { get; set; } = "";
@@ -889,6 +914,7 @@ class Producto
         }
     }
 
+    //Validar codigo
     public static string ValidarCodigo(string mensaje)
     {
         string entrada;
@@ -907,6 +933,7 @@ class Producto
         }
     }
 
+    //Validar producto
     public static string ValidarProducto(string mensaje)
     {
         string entrada;
@@ -925,6 +952,7 @@ class Producto
         }
     }
 
+    //Validar color
     public static string ValidarColor(string mensaje)
     {
         string entrada;
@@ -943,6 +971,7 @@ class Producto
         }
         }
     
+    //Validar talla
     public static string ValidarTalla(string mensaje)
     {
         string entrada;
@@ -961,7 +990,7 @@ class Producto
         }
     }
     
-
+    //Validador generico de texto sin números ni simbolos donde no debe
     public static string ValidarTexto(string mensaje)
     {
         string entrada;
@@ -979,6 +1008,8 @@ class Producto
         }
     }
 }
+
+//Clase para gestion de ordenes 
 class OrdenProduccion
 {
     public int NumeroOrden { get; set; }
