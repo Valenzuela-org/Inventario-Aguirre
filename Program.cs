@@ -39,7 +39,7 @@ if(System.IO.File.Exists("ordenes.txt"))
     foreach (string linea in lineasOrdenes)
     {
         string[] partes = linea.Split('|');
-        if (partes.Length >= 8)
+        if (partes.Length >= 10)
         {
             ordenesProduccion.Add(new OrdenProduccion
             {
@@ -57,6 +57,11 @@ if(System.IO.File.Exists("ordenes.txt"))
         }
     }
 }
+
+//Despues de cargar las ordenes guardadas el contador continua desde la ultima
+siguienteNumeroOrden = ordenesProduccion.Count > 0
+    ? ordenesProduccion.Max(o => o.NumeroOrden) + 1
+    : 1;
 
 //Bucle principal del programa
 int opcion = 0;
@@ -239,12 +244,14 @@ MostrarMenu();
                 }
                 else
                 {
-                    Console.Write("¿Está seguro de eliminar TODOS los productos del inventario? (S/N): ");
+                    Console.Write("¿Está seguro de eliminar TODOS los productos y órdenes? (S/N): ");
                     string confirmacion = (Console.ReadLine() ?? "").Trim().ToUpper();
 
                     if (confirmacion == "S")
                     {
                         productos.Clear();
+                        ordenesProduccion.Clear();
+                        siguienteNumeroOrden = 1; // Reinicia el contador de órdenes
                         if (System.IO.File.Exists("productos.txt"))
                         {
                             System.IO.File.Delete("productos.txt");
