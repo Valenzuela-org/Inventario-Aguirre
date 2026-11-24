@@ -78,15 +78,8 @@ Console.WriteLine("     SISTEMA DE INVENTARIO - AGUIRRE     ");
 Console.WriteLine($"Fecha y hora actual: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}");
 Console.WriteLine("==========================================");
 
-  //Menu de opciones del sistema
-  Console.WriteLine("Seleccione una opción:");
-  Console.WriteLine("1. Ingresar nuevo producto");
-  Console.WriteLine("2. Actualizar producto existente");
-  Console.WriteLine("3. Eliminar producto");
-  Console.WriteLine("4. Buscar producto existente");
-  Console.WriteLine("5. Gestión de producción");
-  Console.WriteLine("6. Reporte general de producción");
-  Console.WriteLine("7. Salir");
+//Mostrar el menú principal
+MostrarMenu();
 
 
   Console.Write("Seleccione una opción: ");
@@ -872,6 +865,19 @@ case 7:
   }
 
 } while (opcion != 7);
+
+//Funcion para mostrar el menu principal
+static void MostrarMenu()
+{
+    Console.WriteLine("Seleccione una opción:");
+    Console.WriteLine("1. Ingresar nuevo producto");
+    Console.WriteLine("2. Actualizar producto existente");
+    Console.WriteLine("3. Eliminar producto");
+    Console.WriteLine("4. Buscar producto existente");
+    Console.WriteLine("5. Gestión de producción");
+    Console.WriteLine("6. Reporte general de producción");
+    Console.WriteLine("7. Salir");
+}
 
 //Clase Producto con validadores estaticos
 class Producto
