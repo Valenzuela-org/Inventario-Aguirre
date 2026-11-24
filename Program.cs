@@ -807,11 +807,32 @@ case 6:
     int totalDefectuosoGeneral = 0;
 
     foreach (OrdenProduccion orden in ordenesProduccion)
+{
+    // Crear un arreglo con las cantidades
+    int[] cantidades =
     {
-        totalProgramadoGeneral += orden.CantidadProgramada;
-        totalProducidoGeneral += orden.CantidadProducida;
-        totalDefectuosoGeneral += orden.CantidadDefectuosa;
+        orden.CantidadProgramada,
+        orden.CantidadProducida,
+        orden.CantidadDefectuosa
+    };
+
+    // Recorrer el arreglo
+    for (int i = 0; i < cantidades.Length; i++)
+    {
+        if (i == 0)
+        {
+            totalProgramadoGeneral += cantidades[i];
+        }
+        else if (i == 1)
+        {
+            totalProducidoGeneral += cantidades[i];
+        }
+        else if (i == 2)
+        {
+            totalDefectuosoGeneral += cantidades[i];
+        }
     }
+}
 
     double porcentajeAvanceGeneral = totalProgramadoGeneral > 0
         ? (double)totalProducidoGeneral / totalProgramadoGeneral * 100
