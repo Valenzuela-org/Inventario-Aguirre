@@ -949,7 +949,7 @@ class Producto
         while (true)
         {
             Console.Write(mensaje);
-            entrada = Console.ReadLine() ?? "";
+            entrada = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
             if (!string.IsNullOrWhiteSpace(entrada) && System.Text.RegularExpressions.Regex.IsMatch(entrada, patron))
             {
                 return entrada;
