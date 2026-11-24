@@ -429,6 +429,19 @@ MostrarMenu();
         break;
      }
 
+     //No permitir otra orden si el producto ya tiene una sin completar
+     OrdenProduccion? ordenAbierta = ordenesProduccion.Find(
+         o => o.CodigoProducto.Equals(productoOrden.Codigo, StringComparison.OrdinalIgnoreCase)
+              && o.Estado != "Completada"
+     );
+
+     if (ordenAbierta != null)
+     {
+         Console.WriteLine($"Error: el producto ya tiene la orden N.º {ordenAbierta.NumeroOrden} en estado {ordenAbierta.Estado}.");
+         Console.WriteLine("Complete esa orden antes de registrar una nueva.");
+         break;
+     }
+
      Console.WriteLine($"Producto: {productoOrden.Nombre}");
      Console.WriteLine($"Color registrado: {productoOrden.Color}");
      Console.WriteLine($"Talla registrada: {productoOrden.Talla}");
