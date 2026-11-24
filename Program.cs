@@ -101,8 +101,7 @@ MostrarMenu();
             Console.WriteLine("==========================================");
 
             //Validación del encargado del lote
-            string encargadoLote = Producto.ValidarEncargado("Ingrese el nombre del encargado del lote: ");
-
+            string encargadoLote = Producto.ValidarEncargado("Seleccione el encargado del lote:");
             int cantidadProductos = 0;
             while (true)
             {
@@ -899,6 +898,13 @@ static void MostrarMenu()
     Console.WriteLine("7. Salir");
 }
 
+//Clase para los encargados autorizados y su DNI
+class Encargado
+{
+    public string Nombre { get; set; } = "";
+    public string Dni { get; set; } = "";
+}
+
 //Clase Producto con validadores estaticos
 class Producto
 {
@@ -917,26 +923,48 @@ class Producto
     public string CantidadProducida { get; set; } = "";
     public string CantidadDefectuosa { get; set; } = "";
 
-    //Validar encargado
+    //Lista de encargados autorizados, cada uno con su propio DNI (DNI de ejemplo)
+    public static List<Encargado> EncargadosAutorizados = new List<Encargado>
+    {
+        new Encargado { Nombre = "ANTHONY",   Dni = "10000001" },
+        new Encargado { Nombre = "IZBET",     Dni = "10000002" },
+        new Encargado { Nombre = "SEBASTIAN", Dni = "10000003" },
+        new Encargado { Nombre = "DANIEL",    Dni = "10000004" },
+        new Encargado { Nombre = "RENATO",    Dni = "10000005" }
+    };
+
+    //Validar encargado: se elige de un menú y se confirma con su DNI
     public static string ValidarEncargado(string mensaje)
     {
-        string entrada;
-        string[] encargadosAutorizados = { "ANTHONY", "IZBET", "SEBASTIAN", "DANIEL", "RENATO" };
         while (true)
         {
-            Console.Write(mensaje);
-            entrada = Console.ReadLine() ?? "";
-            if (!string.IsNullOrWhiteSpace(entrada) && entrada.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            Console.WriteLine(mensaje);
+            for (int i = 0; i < EncargadosAutorizados.Count; i++)
             {
-                if (encargadosAutorizados.Contains(entrada.ToUpper()))
-                {
-                    return entrada;
-                }
-                Console.WriteLine("El nombre del encargado no está autorizado. Por favor, ingrese un encargado autorizado.");
+                Console.WriteLine($"{i + 1}. {EncargadosAutorizados[i].Nombre}");
             }
-            Console.WriteLine("El nombre del encargado es inválido. Por favor, ingrese solo letras y espacios.");
-            Console.WriteLine("Intenta escribir de nuevo...");
-            Console.ReadKey();
+            Console.Write("Elija el número del encargado: ");
+
+            //Solo se acepta un número que exista en el menú
+            if (!int.TryParse(Console.ReadLine(), out int eleccion)
+                || eleccion < 1 || eleccion > EncargadosAutorizados.Count)
+            {
+                Console.WriteLine("Opción inválida. Elija un número de la lista.\n");
+                continue;
+            }
+
+            Encargado elegido = EncargadosAutorizados[eleccion - 1];
+
+            //El DNI debe ser el del encargado elegido, no el de otro
+            Console.Write($"Ingrese el DNI de {elegido.Nombre}: ");
+            string dni = (Console.ReadLine() ?? "").Trim();
+
+            if (dni == elegido.Dni)
+            {
+                return elegido.Nombre;
+            }
+
+            Console.WriteLine("El DNI no corresponde a ese encargado. Intente de nuevo.\n");
         }
     }
 
