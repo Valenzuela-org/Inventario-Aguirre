@@ -180,12 +180,11 @@ MostrarMenu();
             Console.WriteLine("==========================================");
 
             Producto? productoActualizar = null;
-
             // Bucle para permitir reintentar si el código no se encuentra
             while (productoActualizar == null)
             {
                 Console.Write("Ingrese el código del producto a actualizar (o escriba 'SALIR' para volver): ");
-                string codigoActualizar = Console.ReadLine() ?? "";
+                string codigoActualizar = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
                 if (codigoActualizar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                 {
@@ -206,16 +205,19 @@ MostrarMenu();
             {
 
                 Console.Write("Nuevo código: ");
-                productoActualizar.Codigo = Console.ReadLine() ?? "";
+                productoActualizar.Codigo = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
                 
                 Console.Write("Nuevo nombre: ");
-                productoActualizar.Nombre = Console.ReadLine() ?? "";
+                productoActualizar.Nombre = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
                 Console.Write("Nuevo color: ");
-                productoActualizar.Color = Console.ReadLine() ?? "";
+                productoActualizar.Color = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
                 Console.Write("Nueva talla: ");
-                productoActualizar.Talla = Console.ReadLine() ?? "";
+                productoActualizar.Talla = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
+
+                Console.Write("Nuevo encargado: ");
+                productoActualizar.Encargado = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
                 Console.WriteLine("\n¡Producto actualizado correctamente!");
             }
@@ -232,7 +234,7 @@ MostrarMenu();
             Console.WriteLine("1. Eliminar producto por código");
             Console.WriteLine("2. Vaciar todo el inventario");
             Console.Write("Seleccione una opción: ");
-            string opcionEliminar = Console.ReadLine() ?? "";
+            string opcionEliminar = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
             if (opcionEliminar == "2")
             {
@@ -274,7 +276,7 @@ MostrarMenu();
                 while (productoEliminar == null)
                 {
                     Console.Write("Ingrese el código del producto a eliminar (o escriba 'SALIR' para volver): ");
-                    string codigoEliminar = Console.ReadLine() ?? "";
+                    string codigoEliminar = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
                     if (codigoEliminar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                     {
@@ -342,7 +344,7 @@ MostrarMenu();
                 while (encontrado == null)
                 {
                     Console.Write("Ingrese el código del producto a buscar (o escriba 'SALIR' para volver): ");
-                    string codigoBuscar = Console.ReadLine() ?? "";
+                    string codigoBuscar = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
                     if (codigoBuscar.Equals("SALIR", StringComparison.OrdinalIgnoreCase))
                     {
@@ -826,11 +828,32 @@ case 6:
     int totalDefectuosoGeneral = 0;
 
     foreach (OrdenProduccion orden in ordenesProduccion)
+{
+    // Crear un arreglo con las cantidades
+    int[] cantidades =
     {
-        totalProgramadoGeneral += orden.CantidadProgramada;
-        totalProducidoGeneral += orden.CantidadProducida;
-        totalDefectuosoGeneral += orden.CantidadDefectuosa;
+        orden.CantidadProgramada,
+        orden.CantidadProducida,
+        orden.CantidadDefectuosa
+    };
+
+    // Recorrer el arreglo
+    for (int i = 0; i < cantidades.Length; i++)
+    {
+        if (i == 0)
+        {
+            totalProgramadoGeneral += cantidades[i];
+        }
+        else if (i == 1)
+        {
+            totalProducidoGeneral += cantidades[i];
+        }
+        else if (i == 2)
+        {
+            totalDefectuosoGeneral += cantidades[i];
+        }
     }
+}
 
     double porcentajeAvanceGeneral = totalProgramadoGeneral > 0
         ? (double)totalProducidoGeneral / totalProgramadoGeneral * 100
@@ -885,6 +908,7 @@ case 7:
 
 } while (opcion != 7);
 
+ 
 //Funcion para mostrar el menu principal
 static void MostrarMenu()
 {
@@ -938,6 +962,15 @@ class Producto
     {
         while (true)
         {
+            Console.Write(mensaje);
+            entrada = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
+            if (!string.IsNullOrWhiteSpace(entrada) && entrada.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            {
+                if (encargadosAutorizados.Contains(entrada))
+                {
+                    return entrada;
+                }
+                Console.WriteLine("El nombre del encargado no está autorizado. Por favor, ingrese un encargado autorizado.");
             Console.WriteLine(mensaje);
             for (int i = 0; i < EncargadosAutorizados.Count; i++)
             {
@@ -976,7 +1009,7 @@ class Producto
         while (true)
         {
             Console.Write(mensaje);
-            entrada = Console.ReadLine() ?? "";
+            entrada = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
             if (!string.IsNullOrWhiteSpace(entrada) && System.Text.RegularExpressions.Regex.IsMatch(entrada, patron))
             {
                 return entrada;
@@ -995,8 +1028,8 @@ class Producto
         while (true)
         {
             Console.Write(mensaje);
-            entrada = Console.ReadLine() ?? "";
-            if (!string.IsNullOrWhiteSpace(entrada) && productosValidos.Contains(entrada.ToUpper()))
+            entrada = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
+            if (!string.IsNullOrWhiteSpace(entrada) && productosValidos.Contains(entrada))
             {
                 return entrada;
             }
@@ -1033,8 +1066,8 @@ class Producto
         while (true)
         {
             Console.Write(mensaje);
-            entrada = Console.ReadLine() ?? "";
-            if (!string.IsNullOrWhiteSpace(entrada) && tallasValidas.Contains(entrada.ToUpper()))
+            entrada = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
+            if (!string.IsNullOrWhiteSpace(entrada) && tallasValidas.Contains(entrada))
             {
                 return entrada;
             }
