@@ -20,7 +20,7 @@ El programa tiene un menú principal con estas opciones:
 - **Prendas válidas:** camisa o polo.
 - **Colores válidos:** rojo, azul, verde, amarillo, negro, blanco.
 - **Tallas válidas:** XS, S, M, L, XL, XXL.
-- **Encargado:** se elige de un menú y se confirma con su DNI (cada encargado tiene el suyo).
+- **Encargado:** al registrar un lote se elige de un menú y se confirma con su DNI (cada encargado tiene el suyo).
 - **Órdenes:** un producto no puede tener una nueva orden mientras otra suya siga sin completar. Los estados son Pendiente, En producción y Completada.
 
 ## Cómo ejecutarlo
@@ -39,11 +39,11 @@ Los datos se guardan al elegir la opción 7 (Salir) en `productos.txt` y `ordene
 
 ## Integrantes
 
-- [RENATO WILFREDO AGUIRRE GARAY]
-- [ROBERTO SEBASTIAN CCAHUANCAMA SOLIER]
-- [ANDY IZBET CIEZA DIAZ]
-- [DANIEL ENRIQUE SIFUENTES CHAVEZ]
-- [JHON ANTHONY VALENZUELA ARMAS]
+- Renato Wilfredo Aguirre Garay
+- Roberto Sebastián Ccahuancama Solier
+- Andy Izbet Cieza Díaz
+- Daniel Enrique Sifuentes Chávez
+- Jhon Anthony Valenzuela Armas
 
 ## Incidencias
 
