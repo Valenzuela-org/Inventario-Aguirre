@@ -957,49 +957,44 @@ class Producto
         new Encargado { Nombre = "RENATO",    Dni = "10000005" }
     };
 
-    //Validar encargado: se elige de un menú y se confirma con su DNI
-    public static string ValidarEncargado(string mensaje)
+    
+// Validar encargado: se elige de un menú y se confirma con su DNI
+public static string ValidarEncargado(string mensaje)
+{
+    while (true)
     {
-        while (true)
+        Console.WriteLine(mensaje);
+
+        for (int i = 0; i < EncargadosAutorizados.Count; i++)
         {
-            Console.Write(mensaje);
-            entrada = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
-            if (!string.IsNullOrWhiteSpace(entrada) && entrada.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
-            {
-                if (encargadosAutorizados.Contains(entrada))
-                {
-                    return entrada;
-                }
-                Console.WriteLine("El nombre del encargado no está autorizado. Por favor, ingrese un encargado autorizado.");
-            Console.WriteLine(mensaje);
-            for (int i = 0; i < EncargadosAutorizados.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {EncargadosAutorizados[i].Nombre}");
-            }
-            Console.Write("Elija el número del encargado: ");
-
-            //Solo se acepta un número que exista en el menú
-            if (!int.TryParse(Console.ReadLine(), out int eleccion)
-                || eleccion < 1 || eleccion > EncargadosAutorizados.Count)
-            {
-                Console.WriteLine("Opción inválida. Elija un número de la lista.\n");
-                continue;
-            }
-
-            Encargado elegido = EncargadosAutorizados[eleccion - 1];
-
-            //El DNI debe ser el del encargado elegido, no el de otro
-            Console.Write($"Ingrese el DNI de {elegido.Nombre}: ");
-            string dni = (Console.ReadLine() ?? "").Trim();
-
-            if (dni == elegido.Dni)
-            {
-                return elegido.Nombre;
-            }
-
-            Console.WriteLine("El DNI no corresponde a ese encargado. Intente de nuevo.\n");
+            Console.WriteLine($"{i + 1}. {EncargadosAutorizados[i].Nombre}");
         }
+
+        Console.Write("Elija el número del encargado: ");
+
+        // Solo se acepta un número que exista en el menú
+        if (!int.TryParse(Console.ReadLine(), out int eleccion)
+            || eleccion < 1 || eleccion > EncargadosAutorizados.Count)
+        {
+            Console.WriteLine("Opción inválida. Elija un número de la lista.\n");
+            continue;
+        }
+
+        Encargado elegido = EncargadosAutorizados[eleccion - 1];
+
+        // El DNI debe corresponder al encargado elegido
+        Console.Write($"Ingrese el DNI de {elegido.Nombre}: ");
+        string dni = (Console.ReadLine() ?? "").Trim();
+
+        if (dni == elegido.Dni)
+        {
+            return elegido.Nombre;
+        }
+
+        Console.WriteLine("El DNI no corresponde a ese encargado. Intente de nuevo.\n");
     }
+}
+
 
     //Validar codigo
     public static string ValidarCodigo(string mensaje)
